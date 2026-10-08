@@ -62,8 +62,8 @@ fn print_help() {
         \x20 danqing --version\n\
         \n\
         真源：tokens/source.json（人手维护的唯一文件）+ data/chinese-colors.json\n\
-        产物：gen/ 下全部内容，禁止手改，且不入版本库。\n\
-        clone / 拉取后先跑一次 danqing build 即可重建。",
+        产物：gen/** + tokens/danqing.tokens.json + showcase/data.js，共 20 个。\n\
+        三者均禁止手改、均不入版本库；clone / 拉取后跑一次 danqing build 即可重建。",
         env!("CARGO_PKG_VERSION")
     );
 }

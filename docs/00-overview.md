@@ -90,7 +90,7 @@
 ```
 danqing/
 ├─ tokens/source.json          ← 唯一人手真源，改这里
-├─ tokens/danqing.tokens.json  ← 已解析快照（生成）
+├─ tokens/danqing.tokens.json  ← 已解析快照（生成，**不入 git**）
 ├─ Cargo.toml                  ← Rust 工程清单
 ├─ src/                        ← 生成器 + 门禁（编译成单个二进制 `danqing`）
 ├─ data/chinese-colors.json    ← 386 条传统色原始数据

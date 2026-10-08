@@ -10,7 +10,5 @@
 *.zip binary
 *.pdf binary
 
-# 仍入库的两份生成物（令牌快照 / 展示页数据）在 diff 里默认折叠。
-# gen/ 已整体忽略，不需要 linguist 标记。
-tokens/danqing.tokens.json linguist-generated=true
-showcase/data.js linguist-generated=true
+# 生成物（gen/**、tokens/danqing.tokens.json、showcase/data.js）已全部不入库，
+# 不需要 linguist-generated 标记。

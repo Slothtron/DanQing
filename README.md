@@ -63,9 +63,11 @@ cargo test --release           # 14 项单元测试（色彩 / 舍入 / 键名 /
 产物一律以 **LF** 换行写出，不随操作系统变化——旧实现在 Windows 上会产出 CRLF、
 在 Linux 上产出 LF，同一份真源在两个平台生成的产物互相冲突。
 
-`gen/` **不入版本库**：产物能从真源确定性重建，提交它只会让一行真源改动淹没在十几个
-产物的 diff 里。所以 clone 或拉取后的第一步是 `danqing build`；消费方若以相对路径
-链接 `gen/` 下的产物，构建前同样需要先生成。
+**生成物一律不入版本库**：`gen/**`、`tokens/danqing.tokens.json`、`showcase/data.js`
+都能从真源确定性重建，提交它们只会让一行真源改动淹没在十几个产物的 diff 里。
+所以 clone 或拉取后的第一步是 `danqing build`（20 个产物一次性重建）；消费方若以
+相对路径链接产物，构建前同样需要先生成。忘了重跑？`danqing build` 生成后 `danqing verify`
+会告诉你产物与真源是否同步。
 
 ## 4. 五分钟接入
 
@@ -105,7 +107,7 @@ import { light, brands, space, radius } from "./gen/ts/danqing";
 | 路径 | 说明 |
 |---|---|
 | [`tokens/source.json`](./tokens/source.json) | **唯一人手真源**：色族锚点、语义角色、品牌、尺度、扩展 |
-| [`tokens/danqing.tokens.json`](./tokens/danqing.tokens.json) | 已解析的完整令牌快照（生成物） |
+| `tokens/danqing.tokens.json` / `showcase/data.js` | 已解析的完整令牌快照 / 展示页数据（**生成物，不入 git**） |
 | [`src/`](./src/) | **Rust 生成器**：色阶 → 角色派生 → 引用解析 → 门禁 → 多端产物 |
 | [`data/chinese-colors.json`](./data/chinese-colors.json) | 中国传统色原始数据（386 条 / 8 色系，浏览器实机提取） |
 | `gen/` | **全部为生成物，禁止手改，且不入 git**（`.gitignore`）：clone 后跑 `danqing build` 重建 |
@@ -139,7 +141,7 @@ MIT。色值源自公开的中国传统色资料，本系统对其做了色阶�
 | npm 包壳 | `package.json`（`@danqing/tokens`） | **已移除**；按目录 / git 取用产物 |
 | 预览展示页 | `python -m http.server 3788` | `danqing serve`（内置，只绑 127.0.0.1） |
 | 产物换行 | 随平台（Windows 产 CRLF） | **恒为 LF** |
-| `gen/` 是否入 git | 是（产物全部提交） | **否**（`.gitignore` 忽略，clone 后 `danqing build` 重建） |
+| 生成物是否入 git | 是（`gen/` + 快照 + 展示页数据全部提交） | **否**（`.gitignore` 忽略，clone 后 `danqing build` 重建） |
 | `prefers-reduced-motion` | `--dq-dur-normal` 未生效（漏写 f 前缀） | `--dq-dur-normal: 80ms` 生效 |
 
 产物内容（121 个原语、80 个语义角色 × 2 模式、4 个品牌、108 项门禁）与 2.2.0 **逐字节一致**，

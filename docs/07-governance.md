@@ -15,11 +15,12 @@ data/chinese-colors.json ──┼──▶  danqing build  ──▶  tokens/da
 **唯一人手可改的文件是 `tokens/source.json`**（以及 `data/chinese-colors.json` 这份原始色库）。
 `src/` 下的 Rust 生成器是代码，当然也可以改，但改它意味着改规则，需要走下面的变更流程。
 
-`gen/` 与 `tokens/danqing.tokens.json` 应当视为构建产物。建议做法：
+`gen/**`、`tokens/danqing.tokens.json`、`showcase/data.js` 都是构建产物，
+**一律不入版本库**（见 `.gitignore`）。纪律是：
 
-- 提交到仓库（便于各端直接取用、也在 PR 里可见变更）
-- 在 `gen/README` 或文件头注明生成物
-- **永远不要**为了「先上线」手改 `gen/`——下次生成即被覆盖，且这种改动不会进入门禁
+- clone / 拉取后先跑一次 `danqing build`，20 个产物一次性重建
+- 改了真源却忘了重跑 → 本地 `danqing verify` 会报出漂移并退出码 1
+- **永远不要**为了「先上线」手改产物——下次生成即被覆盖，且这种改动不会进入门禁
 
 ## 2. 变更流程
 

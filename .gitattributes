@@ -1,0 +1,16 @@
+# 产物必须与平台无关：生成器一律写 LF，这里保证检出也是 LF，
+# 否则 Windows 上检出的 CRLF 会让 `danqing verify` 永久报漂移。
+* text=auto eol=lf
+
+# 二进制不参与文本规范化
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.zip binary
+*.pdf binary
+
+# 生成物在 diff 里默认折叠，避免真源改动被大规模产物 diff 淹没
+gen/** linguist-generated=true
+tokens/danqing.tokens.json linguist-generated=true
+showcase/data.js linguist-generated=true

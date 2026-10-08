@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light" data-brand="qing">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>丹青 · 中国传统色彩设计系统</title>
+<link rel="stylesheet" href="../gen/css/danqing.css">
+<style>
+/* ============================================================
+   展示页自身样式。所有设计令牌都通过 var(--dq-*, 兜底值) 取用，
+   因此即使令牌样式表未加载，页面依旧可读（并会给出提示）。
+   ============================================================ */
+:root{
+  --p-bg:      var(--dq-bg-canvas, #E9E6DD);
+  --p-base:    var(--dq-bg-base, #F3F1EC);
+  --p-card:    var(--dq-surface-default, #FFFFFF);
+  --p-ink:     var(--dq-text-primary, #22242A);
+  --p-sub:     var(--dq-text-secondary, rgba(34,36,42,.68));
+  --p-ter:     var(--dq-text-tertiary, rgba(34,36,42,.55));
+  --p-line:    var(--dq-border-default, rgba(34,36,42,.14));
+  --p-line-s:  var(--dq-border-subtle, rgba(34,36,42,.08));
+  --p-primary: var(--dq-primary-default, #2E59A7);
+  --p-on-pri:  var(--dq-primary-on, #FFFFFF);
+  --p-accent:  var(--dq-accent-default, #7D5284);
+  --p-r-lg:    var(--dq-radius-lg, 16px);
+  --p-r-md:    var(--dq-radius-md, 12px);
+  --p-sp-4:    var(--dq-space-4, 16px);
+  --p-sp-6:    var(--dq-space-6, 24px);
+  --p-elev-2:  var(--dq-elev-2, 0 2px 6px rgba(20,23,28,.08));
+  --serif: "Source Serif 4","Noto Serif SC","Source Han Serif SC","Songti SC",SimSun,Georgia,serif;
+  --sans:  "Inter","Noto Sans SC","Source Han Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  --mono:  "JetBrains Mono",ui-monospace,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{
+  margin:0;background:var(--p-base);color:var(--p-ink);
+  font-family:var(--sans);font-size:14px;line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+.warn{display:none;padding:10px 20px;background:#FFF3D6;color:#7A4D00;font-size:13px;border-bottom:1px solid #E9C97A}
+.warn.show{display:block}
+.warn code{font-family:var(--mono);background:rgba(122,77,0,.09);padding:1px 6px;border-radius:4px}
+
+/* ---------- 顶栏 ---------- */
+header.top{
+  position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);
+  background:color-mix(in srgb, var(--p-base) 86%, transparent);
+  border-bottom:1px solid var(--p-line-s);
+}
+.top-in{max-width:1240px;margin:0 auto;padding:10px 24px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.brand-id{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-size:19px;font-weight:700;letter-spacing:.06em}
+.seal{
+  width:30px;height:30px;border-radius:7px;display:grid;place-items:center;
+  background:var(--p-accent);color:#fff;font-size:15px;font-family:var(--serif);
+}
+.top nav{margin-left:auto;display:flex;gap:2px;flex-wrap:wrap}
+.top nav a{
+  color:var(--p-sub);text-decoration:none;font-size:13px;padding:5px 9px;border-radius:7px;
+}
+.top nav a:hover{background:var(--dq-state-hover, rgba(34,36,42,.05));color:var(--p-ink)}
+.seg{display:flex;gap:2px;padding:3px;border:1px solid var(--p-line);border-radius:9px;background:var(--p-card)}
+.seg button{
+  border:0;background:none;font:inherit;font-size:12.5px;color:var(--p-sub);
+  padding:4px 10px;border-radius:6px;cursor:pointer;transition:background .14s,color .14s;
+}
+.seg button:hover{background:var(--dq-state-hover, rgba(34,36,42,.05))}
+.seg button[aria-pressed="true"]{background:var(--p-primary);color:var(--p-on-pri)}
+
+/* ---------- 版式 ---------- */
+main{max-width:1240px;margin:0 auto;padding:0 24px 96px}
+section{padding:64px 0;border-top:1px solid var(--p-line-s)}
+section:first-of-type{border-top:0}
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--p-ter);margin:0 0 10px}
+h2{font-family:var(--serif);font-size:clamp(24px,3.2vw,34px);line-height:1.25;margin:0 0 12px;font-weight:700;letter-spacing:.01em}
+.lede{color:var(--p-sub);max-width:62ch;margin:0 0 28px}
+h3{font-family:var(--serif);font-size:19px;margin:32px 0 12px;font-weight:700}
+h4{font-size:14px;margin:24px 0 10px;font-weight:600;letter-spacing:.02em;color:var(--p-sub)}
+p{margin:0 0 12px}
+a{color:var(--dq-text-link, var(--p-primary))}
+code{font-family:var(--mono);font-size:.88em;background:var(--dq-surface-variant, #EDEBE4);padding:1.5px 5px;border-radius:4px}
+.card{background:var(--p-card);border:1px solid var(--p-line-s);border-radius:var(--p-r-lg);padding:var(--p-sp-6)}
+.grid{display:grid;gap:14px}
+
+/* ---------- 英雄区 ---------- */
+.hero{padding:72px 0 48px;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:48px;align-items:center}
+@media(max-width:900px){.hero{grid-template-columns:1fr;gap:28px}}
+.hero h1{font-family:var(--serif);font-size:clamp(34px,6vw,60px);line-height:1.06;margin:0 0 18px;font-weight:700;letter-spacing:.02em}
+.hero h1 em{font-style:normal;color:var(--p-accent)}
+.hero .en{font-family:var(--mono);font-size:12px;letter-spacing:.22em;color:var(--p-ter);text-transform:uppercase;margin:0 0 20px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--p-line-s);border-radius:var(--p-r-lg);overflow:hidden}
+.stat{background:var(--p-card);padding:16px 14px}
+.stat b{display:block;font-family:var(--mono);font-size:24px;font-weight:600;letter-spacing:-.02em}
+.stat span{font-size:11.5px;color:var(--p-ter);letter-spacing:.04em}
+
+/* ---------- 三层架构 ---------- */
+.tiers{display:grid;gap:12px}
+.tier{display:grid;grid-template-columns:76px 1fr auto;gap:18px;align-items:center;padding:16px 20px;border-radius:var(--p-r-md);border:1px solid var(--p-line-s);background:var(--p-card)}
+.tier .no{font-family:var(--mono);font-size:11px;color:var(--p-ter);letter-spacing:.1em}
+.tier .nm{font-family:var(--serif);font-size:17px;font-weight:700}
+.tier .ds{font-size:12.5px;color:var(--p-sub)}
+.tier .ct{font-family:var(--mono);font-size:12px;color:var(--p-ter);white-space:nowrap}
+@media(max-width:640px){.tier{grid-template-columns:1fr;gap:6px}}
+.arrowdown{text-align:center;color:var(--p-ter);font-size:12px;letter-spacing:.5em}
+
+/* ---------- 色族 ---------- */
+.fam{margin:0 0 26px}
+.fam-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin:0 0 8px}
+.fam-head .zh{font-family:var(--serif);font-size:21px;font-weight:700}
+.fam-head .py{font-family:var(--mono);font-size:11.5px;color:var(--p-ter);letter-spacing:.08em}
+.fam-head .tag{font-size:11px;padding:2px 8px;border-radius:999px;border:1px solid var(--p-line);color:var(--p-sub)}
+.fam-head .tag.res{border-color:var(--p-accent);color:var(--p-accent)}
+.fam-head .intent{font-size:12.5px;color:var(--p-sub);margin-left:auto}
+@media(max-width:720px){.fam-head .intent{margin-left:0;width:100%}}
+.ramp{display:grid;grid-template-columns:repeat(11,1fr);gap:2px}
+.sw{position:relative;cursor:default}
+.sw .chip{height:46px;border-radius:5px;border:1px solid rgba(0,0,0,.05)}
+.sw:first-child .chip{border-radius:5px 2px 2px 5px}
+.sw:last-child .chip{border-radius:2px 5px 5px 2px}
+.sw .lb{font-family:var(--mono);font-size:10px;color:var(--p-ter);margin-top:4px;text-align:center}
+.sw.anchor .chip{box-shadow:0 0 0 2px var(--p-card),0 0 0 3.5px var(--p-ink)}
+.sw.anchor .lb{color:var(--p-ink);font-weight:600}
+.sw:hover .chip{transform:scale(1.06);z-index:2;box-shadow:var(--p-elev-2)}
+.sw .tt{
+  position:absolute;left:50%;bottom:calc(100% + 10px);transform:translateX(-50%) scale(.94);
+  background:var(--p-ink);color:var(--p-base);font-size:11.5px;line-height:1.45;
+  padding:6px 10px;border-radius:7px;white-space:nowrap;pointer-events:none;
+  opacity:0;transition:opacity .14s,transform .14s;z-index:9;
+}
+.sw:hover .tt{opacity:1;transform:translateX(-50%) scale(1)}
+@media(max-width:720px){.ramp{grid-template-columns:repeat(6,1fr)}}
+
+/* ---------- 色卡网格（语义） ---------- */
+.toks{display:grid;grid-template-columns:repeat(auto-fill,minmax(186px,1fr));gap:10px}
+.tok{border:1px solid var(--p-line-s);border-radius:10px;overflow:hidden;background:var(--p-card)}
+.tok .fill{height:56px;border-bottom:1px solid var(--p-line-s)}
+.tok .m{padding:8px 10px}
+.tok .m .k{font-family:var(--mono);font-size:11.5px;font-weight:600}
+.tok .m .v{font-family:var(--mono);font-size:10.5px;color:var(--p-ter);word-break:break-all}
+
+/* ---------- 品牌 ---------- */
+.brands{display:grid;grid-template-columns:repeat(auto-fit,minmax(232px,1fr));gap:14px}
+.bcard{border:1px solid var(--p-line-s);border-radius:var(--p-r-md);background:var(--p-card);overflow:hidden;cursor:pointer;transition:box-shadow .16s,transform .16s}
+.bcard:hover{box-shadow:var(--p-elev-2);transform:translateY(-2px)}
+.bcard.on{border-color:var(--p-ink);box-shadow:0 0 0 2px var(--p-ink)}
+.bcard .top2{height:64px;display:grid;place-items:center;color:#fff;font-family:var(--serif);font-size:17px;font-weight:700}
+.bcard .body{padding:12px 14px}
+.bcard .body .n{font-family:var(--serif);font-size:15px;font-weight:700}
+.bcard .body .d{font-size:12px;color:var(--p-sub);margin:4px 0 8px}
+.bcard .body .a{font-size:11px;color:var(--p-ter)}
+.demo-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:14px 0 0}
+
+/* ---------- 组件样例 ---------- */
+.btn{
+  font:inherit;font-size:13.5px;border:0;border-radius:var(--dq-radius-sm,8px);cursor:pointer;
+  padding:0 16px;height:36px;display:inline-flex;align-items:center;gap:7px;
+  transition:background .14s,box-shadow .14s,color .14s;
+}
+.btn.pri{background:var(--p-primary);color:var(--p-on-pri)}
+.btn.pri:hover{background:var(--dq-primary-hover, var(--p-primary))}
+.btn.pri:active{background:var(--dq-primary-active, var(--p-primary))}
+.btn.sec{background:var(--dq-surface-variant,#EDEBE4);color:var(--p-ink)}
+.btn.out{background:transparent;color:var(--p-primary);box-shadow:inset 0 0 0 1px var(--dq-primary-border, var(--p-primary))}
+.btn.ghost{background:transparent;color:var(--p-ink)}
+.btn.ghost:hover{background:var(--dq-state-hover, rgba(34,36,42,.05))}
+.btn.dan{background:var(--dq-danger-default,#8F1D22);color:var(--dq-danger-on,#fff)}
+.btn:disabled{background:var(--dq-state-disabled,rgba(34,36,42,.05));color:var(--dq-text-disabled,rgba(34,36,42,.34));cursor:not-allowed}
+.btn:focus-visible{outline:2px solid var(--dq-focus-ring,var(--p-primary));outline-offset:2px}
+.field{display:block;margin:0 0 12px}
+.field input{
+  font:inherit;font-size:13.5px;width:100%;height:36px;padding:0 12px;color:var(--p-ink);
+  background:var(--p-card);border:1px solid var(--p-line);border-radius:var(--dq-radius-sm,8px);
+}
+.field input::placeholder{color:var(--dq-text-tertiary,rgba(34,36,42,.55))}
+.field input:focus{outline:2px solid var(--dq-focus-ring,var(--p-primary));outline-offset:1px;border-color:var(--p-primary)}
+.field .hint{font-size:11.5px;color:var(--p-ter);margin-top:4px}
+.chips{display:flex;gap:7px;flex-wrap:wrap}
+.chipx{font-size:12px;padding:3px 10px;border-radius:999px;border:1px solid var(--p-line);color:var(--p-sub)}
+.chipx.ok{background:var(--dq-success-subtle,#D2E8D6);color:var(--dq-success-text,#2A6E3F);border-color:transparent}
+.chipx.wa{background:var(--dq-warning-subtle,#FEDAB8);color:var(--dq-warning-text,#9E5D00);border-color:transparent}
+.chipx.da{background:var(--dq-danger-subtle,#FFD6D2);color:var(--dq-danger-text,#8F1D22);border-color:transparent}
+.chipx.in{background:var(--dq-info-subtle,#CBE9E4);color:var(--dq-info-text,#186760);border-color:transparent}
+.chipx.pr{background:var(--dq-primary-subtle,#D1E2FF);color:var(--dq-primary-text,#2E59A7);border-color:transparent}
+.alerts{display:grid;gap:10px}
+.al{display:flex;gap:10px;align-items:flex-start;padding:11px 14px;border-radius:var(--p-r-md);font-size:13px;
+    background:var(--dq-surface-variant,#EDEBE4);border-left:3px solid var(--p-line)}
+.al b{font-weight:600}
+.al.ok{background:var(--dq-success-subtle,#D2E8D6);border-left-color:var(--dq-success-default,#2A6E3F)}
+.al.wa{background:var(--dq-warning-subtle,#FEDAB8);border-left-color:var(--dq-warning-default,#C67915)}
+.al.da{background:var(--dq-danger-subtle,#FFD6D2);border-left-color:var(--dq-danger-default,#8F1D22)}
+.al.in{background:var(--dq-info-subtle,#CBE9E4);border-left-color:var(--dq-info-default,#3D8E86)}
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{text-align:left;font-weight:600;font-size:11.5px;letter-spacing:.06em;color:var(--p-ter);
+        padding:8px 12px;border-bottom:1px solid var(--p-line)}
+.tbl td{padding:9px 12px;border-bottom:1px solid var(--p-line-s)}
+.tbl tbody tr:hover{background:var(--dq-state-hover,rgba(34,36,42,.04))}
+.tbl .num{font-family:var(--mono);text-align:right}
+.sw-track{position:relative;width:46px;height:24px;border-radius:999px;background:var(--dq-state-selected,rgba(34,36,42,.14));transition:background .16s;cursor:pointer;border:0;flex:none}
+.sw-track::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.2);transition:transform .16s}
+.sw-track[aria-checked="true"]{background:var(--p-primary)}
+.sw-track[aria-checked="true"]::after{transform:translateX(22px)}
+.skl{height:12px;border-radius:6px;background:linear-gradient(90deg,var(--dq-skeleton-base,rgba(34,36,42,.07)),var(--dq-skeleton-sheen,rgba(34,36,42,.03)),var(--dq-skeleton-base,rgba(34,36,42,.07)));background-size:200% 100%;animation:sh 1.6s infinite}
+@keyframes sh{to{background-position:-200% 0}}
+@media(prefers-reduced-motion:reduce){.skl{animation:none}}
+
+/* ---------- 图表 ---------- */
+.chartbox{border:1px solid var(--p-line-s);border-radius:var(--p-r-md);background:var(--p-card);padding:18px 20px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--p-sub);margin-top:12px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+
+/* ---------- 尺度 ---------- */
+.scale-row{display:flex;align-items:center;gap:12px;padding:7px 0;border-bottom:1px solid var(--p-line-s);font-size:12.5px}
+.scale-row .k{font-family:var(--mono);width:78px;color:var(--p-sub);flex:none}
+.scale-row .bar{height:14px;background:var(--p-primary);border-radius:3px;opacity:.85}
+.scale-row .v{font-family:var(--mono);color:var(--p-ter);margin-left:auto}
+.radii{display:flex;gap:16px;flex-wrap:wrap}
+.radii .r{text-align:center;font-size:11px;color:var(--p-ter)}
+.radii .r .bx{width:64px;height:64px;background:var(--p-primary);opacity:.9;margin-bottom:6px}
+.shadows{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:18px;text-align:center;font-size:11.5px;color:var(--p-ter)}
+.shadows .s{height:70px;background:var(--p-card);border-radius:var(--p-r-md);display:grid;place-items:center;font-family:var(--mono)}
+
+/* ---------- 门禁 ---------- */
+.gatewrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.gate{border:1px solid var(--p-line-s);border-radius:var(--p-r-md);background:var(--p-card);overflow:hidden}
+.gate .gh{padding:11px 14px;font-size:13px;font-weight:600;border-bottom:1px solid var(--p-line-s);display:flex;align-items:center;gap:8px}
+.gate .gh .n{font-family:var(--mono);font-size:11px;color:var(--p-ter);margin-left:auto}
+.gate ul{margin:0;padding:6px 0;list-style:none;max-height:200px;overflow:auto}
+.gate li{display:flex;gap:10px;align-items:baseline;padding:4px 14px;font-size:12px}
+.gate li .r{font-family:var(--mono);margin-left:auto;color:var(--p-ter)}
+.gate li .r.pass{color:var(--dq-success-text,#2A6E3F)}
+.gate li .r.fail{color:var(--dq-danger-text,#8F1D22);font-weight:600}
+.big-ok{display:flex;align-items:center;gap:14px;padding:18px 20px;border-radius:var(--p-r-md);
+        background:var(--dq-success-subtle,#D2E8D6);color:var(--dq-success-text,#2A6E3F);margin:0 0 18px}
+.big-ok b{font-family:var(--mono);font-size:28px}
+.big-ok span{font-size:13px;opacity:.85}
+
+/* ---------- 端产物 ---------- */
+.prods{display:grid;grid-template-columns:repeat(auto-fill,minmax(228px,1fr));gap:10px}
+.prod{border:1px solid var(--p-line-s);border-radius:10px;padding:12px 14px;background:var(--p-card)}
+.prod .n{font-family:var(--mono);font-size:12px;font-weight:600;word-break:break-all}
+.prod .d{font-size:11.5px;color:var(--p-sub);margin-top:4px}
+footer{border-top:1px solid var(--p-line-s);padding:32px 0 0;color:var(--p-ter);font-size:12.5px}
+footer a{color:var(--p-sub)}
+</style>
+</head>
+<body>
+
+<div class="warn" id="warn">
+  未能读取到令牌样式表 <code>../gen/css/danqing.css</code>。展示页仍可浏览，但主题与品牌切换不会生效。
+  请用本地服务打开：<code>danqing serve</code>（默认 127.0.0.1:3788），
+  然后访问 <code>http://127.0.0.1:3788/showcase/</code>
+</div>
+
+<header class="top">
+  <div class="top-in">
+    <div class="brand-id"><span class="seal">丹</span> 丹青</div>
+    <nav>
+      <a href="#arch">架构</a>
+      <a href="#colors">色族</a>
+      <a href="#brands">品牌</a>
+      <a href="#tokens">语义</a>
+      <a href="#components">组件</a>
+      <a href="#charts">图表</a>
+      <a href="#scales">尺度</a>
+      <a href="#a11y">门禁</a>
+      <a href="#outputs">端产物</a>
+    </nav>
+    <div class="seg" role="group" aria-label="主题">
+      <button id="t-light" aria-pressed="true">浅色</button>
+      <button id="t-dark" aria-pressed="false">深色</button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero" id="top">
+  <div>
+    <p class="en">Danqing · Chinese Traditional Color Design System</p>
+    <h1>任何应用都能用的<br><em>中国传统色彩</em>设计系统</h1>
+    <p class="lede">
+      丹砂与青雘，是中国古代绘画的两种原色，也是「颜色这件事」最古老的代称。
+      丹青把这套颜色做成工程：<b>11 个色族从传统色原值出发生成 121 级色阶</b>，
+      映射为 <b>80 个通用语义令牌</b>，再由一个脚本产出 <b>15 种端产物</b>，
+      并用 <b>90 项 WCAG 门禁</b>保证它真的可读。
+    </p>
+    <p class="lede" style="font-size:13px;margin-bottom:0">
+      核心层不含任何领域概念——阅读、播放、下单都不在其中。领域需求走 <code>ext.*</code> 扩展。
+    </p>
+  </div>
+  <div class="stats" id="stats"></div>
+</section>
+
+<!-- ===================== 架构 ===================== -->
+<section id="arch">
+  <p class="eyebrow">Architecture</p>
+  <h2>三层架构：原语 → 语义 → 扩展</h2>
+  <p class="lede">
+    关键在中间那一层。没有它，设计师给一张色卡，开发就得自己在 121 个色里挑、自己起名字、
+    自己判断哪个压得住白字——而这些判断在不同人和项目之间必然发散。
+  </p>
+  <div class="tiers">
+    <div class="tier">
+      <div class="no">TIER 1</div>
+      <div><div class="nm">原语 · cn.<span style="font-weight:400;color:var(--p-ter)">{family}.{step}</span></div>
+        <div class="ds">11 个中国传统色族 × 11 级色阶。锚点级写回传统色原值，每一级都反查了最接近的传统色名。<b>无语义，不得直出到界面。</b></div></div>
+      <div class="ct">121</div>
+    </div>
+    <div class="arrowdown">▼</div>
+    <div class="tier">
+      <div class="no">TIER 2</div>
+      <div><div class="nm">语义 · sys.<span style="font-weight:400;color:var(--p-ter)">{role}.{variant}</span></div>
+        <div class="ds">背景 / 表面 / 描边 / 文字 / 主色 / 五状态色 / 交互态 / 浮层 / 焦点 / 骨架屏 / 图表。浅深两套。<b>应用代码唯一允许直接引用的层。</b></div></div>
+      <div class="ct">80 × 2</div>
+    </div>
+    <div class="arrowdown">▼</div>
+    <div class="tier">
+      <div class="no">TIER 3</div>
+      <div><div class="nm">扩展 · ext.<span style="font-weight:400;color:var(--p-ter)">{domain}.{name}</span></div>
+        <div class="ds">领域扩展，按需引入。内置示例 <code>ext.reading</code>：纸色 / 正文字号 / 行高 / 行宽 / 段首缩进 —— 这些在任何通用界面里都是噪音。</div></div>
+      <div class="ct">可选</div>
+    </div>
+  </div>
+
+  <h3>四条铁律</h3>
+  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">
+    <div class="card"><h4 style="margin-top:0">一个真源</h4><p style="margin:0;font-size:13px;color:var(--p-sub)"><code>tokens/source.json</code> 是唯一人手维护的文件，<code>gen/</code> 全部是生成物，改了会被下次生成覆盖。</p></div>
+    <div class="card"><h4 style="margin-top:0">只引用语义</h4><p style="margin:0;font-size:13px;color:var(--p-sub)"><code>color:#2E59A7</code> 与 <code>color:var(--dq-cn-qing-700)</code> 都是错的，只有 <code>var(--dq-primary-default)</code> 是对的。</p></div>
+    <div class="card"><h4 style="margin-top:0">深浅成对</h4><p style="margin:0;font-size:13px;color:var(--p-sub)">新增语义角色必须同时给出浅色与深色两个值。深色不是浅色的反相，是换了一套材料。</p></div>
+    <div class="card"><h4 style="margin-top:0">颜色不单独承载信息</h4><p style="margin:0;font-size:13px;color:var(--p-sub)">状态色必须附图标或文案（WCAG 1.4.1）。门禁管底线，评审管上限。</p></div>
+  </div>
+</section>
+
+<!-- ===================== 色族 ===================== -->
+<section id="colors">
+  <p class="eyebrow">Primitives · tier 1</p>
+  <h2>十一个色族，每个锚点都能溯源</h2>
+  <p class="lede">
+    锚点级<b>直接使用传统色原值，不取推导值</b>——这是「色彩必须有出处」最硬的落实。
+    其余级保持色相不变、按 OKLab 感知明度等距派生，并按距离锚点远近衰减彩度（避免亮部变荧光、暗部变死黑）。
+    每一级都反查了最接近的传统色名，鼠标悬停可看。
+  </p>
+  <div id="families"></div>
+  <div class="card" style="margin-top:22px">
+    <h4 style="margin-top:0">保留族机制</h4>
+    <p style="font-size:13px;color:var(--p-sub);margin:0 0 10px">
+      一个常见的严重问题：品牌色选了绿色，而系统里「成功」也是绿色 —— 用户无法仅凭颜色区分「主操作」与「操作成功」。
+      丹青把色族分成两类，让这种冲突在<b>结构上不可能发生</b>：
+    </p>
+    <div id="reserved"></div>
+  </div>
+</section>
+
+<!-- ===================== 品牌 ===================== -->
+<section id="brands">
+  <p class="eyebrow">Brand</p>
+  <h2>换品牌只改一个属性</h2>
+  <p class="lede">
+    品牌是一个受约束的开关：它只重新解析 <code>primary.*</code>、<code>focus.ring</code>、<code>text.link</code>，
+    其余 70 余个语义令牌与全部 121 个原语保持不变。点下面的卡片即可切换本页品牌。
+  </p>
+  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
+    <div class="brands" id="brandCards" style="grid-column:span 1"></div>
+    <div class="card" id="brandPreview"></div>
+  </div>
+
+  <h3>「锚点保真 + 可读性回退」</h3>
+  <p class="lede" style="margin-bottom:14px">
+    优先使用锚点那一级；若该级无法同时满足「与底色 ≥3:1」与「填充上文字 ≥4.5:1」，就沿色阶向外回退最近的达标级，
+    并把回退步数记录下来。<b>注意「填充上的文字」是从最亮白与最暗墨两个极端里择优</b>——
+    檀色因此得到「赭褐底 + 墨字」，而不是强行用白字（3.79:1，不达标）。
+  </p>
+  <div id="brandTable"></div>
+</section>
+
+<!-- ===================== 语义令牌 ===================== -->
+<section id="tokens">
+  <p class="eyebrow">Semantic · tier 2</p>
+  <h2>八十个语义令牌，两套模式</h2>
+  <p class="lede">
+    下面按角色组列出全部语义令牌。所有色块都直接取用 <code>var(--dq-*)</code>，
+    因此切主题 / 切品牌时它们会实时变化——看到的即用到的。
+  </p>
+  <div id="tokenGroups"></div>
+</section>
+
+<!-- ===================== 组件 ===================== -->
+<section id="components">
+  <p class="eyebrow">Components</p>
+  <h2>不是组件库，但足以验证令牌够用</h2>
+  <p class="lede">
+    丹青不提供组件代码 —— 组件属于产品。下面这些样例只用语义令牌写成，
+    用来验证一件事：<b>这套令牌能否撑起一个真实界面，且在深浅两色与四种品牌下都成立。</b>
+  </p>
+
+  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(320px,1fr))">
+    <div class="card">
+      <h4 style="margin-top:0">按钮</h4>
+      <div class="demo-row">
+        <button class="btn pri">主要操作</button>
+        <button class="btn sec">次要</button>
+        <button class="btn out">描边</button>
+        <button class="btn ghost">静默</button>
+        <button class="btn dan">删除</button>
+        <button class="btn pri" disabled>禁用</button>
+      </div>
+      <div class="demo-row" style="gap:6px">
+        <button class="btn pri" style="height:30px;font-size:12.5px">小</button>
+        <button class="btn pri" style="height:36px">中</button>
+        <button class="btn pri" style="height:44px;font-size:15px">大（触控下限 44）</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h4 style="margin-top:0">输入</h4>
+      <label class="field">
+        <input type="text" placeholder="占位文字用 text.tertiary（≥3:1）">
+        <div class="hint">辅助说明用 text.tertiary</div>
+      </label>
+      <label class="field" style="margin-bottom:0">
+        <input type="text" value="已填写" style="border-color:var(--dq-primary-default)">
+        <div class="hint" style="color:var(--dq-danger-text)">焦点环用 focus.ring + 2px 偏移，禁止 outline:none</div>
+      </label>
+    </div>
+
+    <div class="card">
+      <h4 style="margin-top:0">标签与徽标</h4>
+      <div class="chips">
+        <span class="chipx pr">主色</span>
+        <span class="chipx ok">成功</span>
+        <span class="chipx wa">警告</span>
+        <span class="chipx da">危险</span>
+        <span class="chipx in">信息</span>
+        <span class="chipx">中性</span>
+      </div>
+      <h4>开关与分段</h4>
+      <div class="demo-row">
+        <button class="sw-track" role="switch" aria-checked="true" aria-label="开"></button>
+        <button class="sw-track" role="switch" aria-checked="false" aria-label="关"></button>
+        <div class="seg" style="margin-left:auto">
+          <button aria-pressed="true">列表</button><button aria-pressed="false">网格</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h4 style="margin-top:0">状态提示</h4>
+      <div class="alerts">
+        <div class="al ok"><span>✓</span><div><b>已保存</b> · 草稿在 3 分钟前同步</div></div>
+        <div class="al wa"><span>!</span><div><b>配额接近上限</b> · 已用 92%</div></div>
+        <div class="al da"><span>✕</span><div><b>无法连接</b> · 请检查网络后重试</div></div>
+        <div class="al in"><span>i</span><div><b>提示</b> · 此设置对所有设备生效</div></div>
+      </div>
+      <p style="font-size:11.5px;color:var(--p-ter);margin:10px 0 0">
+        每个状态都带符号 —— 颜色不是唯一线索（色盲用户约占男性 8%）。
+      </p>
+    </div>
+
+    <div class="card">
+      <h4 style="margin-top:0">表格</h4>
+      <table class="tbl">
+        <thead><tr><th>名称</th><th>状态</th><th class="num">数值</th></tr></thead>
+        <tbody>
+          <tr><td>群青</td><td><span class="chipx in">正常</span></td><td class="num">6.77</td></tr>
+          <tr><td>银朱</td><td><span class="chipx wa">待确认</span></td><td class="num">5.19</td></tr>
+          <tr><td>朱樱</td><td><span class="chipx da">失败</span></td><td class="num">9.17</td></tr>
+          <tr><td>檀色</td><td><span class="chipx ok">完成</span></td><td class="num">4.72</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h4 style="margin-top:0">卡片与骨架屏</h4>
+      <div style="border:1px solid var(--p-line-s);border-radius:var(--p-r-md);padding:14px">
+        <div style="height:88px;border-radius:var(--p-r-sm);background:var(--dq-accent-subtle);margin-bottom:10px"></div>
+        <div style="font-family:var(--serif);font-size:16px;font-weight:700">卡片标题</div>
+        <div style="font-size:12.5px;color:var(--p-sub);margin:4px 0 0">说明用 text.secondary，需要 ≥4.5:1</div>
+      </div>
+      <div style="margin-top:14px;display:grid;gap:8px">
+        <div class="skl" style="width:62%"></div><div class="skl" style="width:88%"></div><div class="skl" style="width:44%"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 图表 ===================== -->
+<section id="charts">
+  <p class="eyebrow">Data visualization</p>
+  <h2>十色序列，刻意避开红绿相邻</h2>
+  <p class="lede">
+    按「青绿山水 → 暖褐」的冷暖顺序排列。图表色是字面值，因此生成器会额外校验它们与底色的对比度（≥3:1）——
+    不达标就在 OKLCh 中调整明度并记录修正（本次：浅色 c4 秋香 <code>#BF9C46</code> → <code>#A9862E</code>）。
+  </p>
+  <div class="chartbox">
+    <div id="chartBars"></div>
+    <div class="legend" id="chartLegend"></div>
+  </div>
+  <div id="chartList" style="margin-top:16px"></div>
+</section>
+
+<!-- ===================== 尺度 ===================== -->
+<section id="scales">
+  <p class="eyebrow">Scales</p>
+  <h2>尺度令牌：让「多大」也有出处</h2>
+  <p class="lede">间距 4pt 基准、圆角八档、阴影五级、字号八档。<b>不要在组件里随手写 px。</b></p>
+  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
+    <div class="card"><h4 style="margin-top:0">间距 space（跳过的数字是保留位）</h4><div id="spaceList"></div></div>
+    <div class="card"><h4 style="margin-top:0">圆角 radius</h4><div class="radii" id="radiusList"></div></div>
+    <div class="card"><h4 style="margin-top:0">阴影 elevation（阴影色相取墨色，非纯黑）</h4><div class="shadows" id="shadowList"></div></div>
+    <div class="card"><h4 style="margin-top:0">字号 typography</h4><div id="typeList"></div></div>
+  </div>
+</section>
+
+<!-- ===================== 门禁 ===================== -->
+<section id="a11y">
+  <p class="eyebrow">Accessibility gates</p>
+  <h2>可验优于可信</h2>
+  <p class="lede">
+    设计系统的无障碍最容易犯的错是声明式：文档里写「我们符合 WCAG AA」，但没有任何东西能阻止下一个人加一个不达标的颜色。
+    丹青把无障碍做成构建门禁 —— <code>danqing build</code> 任何一项失败即返回退出码 1。
+    <b>所有前景色的 alpha 都先合成到背景再计算</b>，因为 <code>rgba(30,39,50,.68)</code> 的真实观感是合成后的颜色，不是墨色本身。
+  </p>
+  <div class="big-ok" id="gateSummary"></div>
+  <div class="gatewrap" id="gateGroups"></div>
+</section>
+
+<!-- ===================== 端产物 ===================== -->
+<section id="outputs">
+  <p class="eyebrow">Outputs</p>
+  <h2>一个真源，十五种产物</h2>
+  <p class="lede">
+    <code>tokens/source.json</code> 是唯一人手维护的文件。各端拿到的都是生成物，不存在「某端有自己那份色值」。
+  </p>
+  <div class="prods" id="prodList"></div>
+  <h3>接入方式</h3>
+  <div class="card" style="padding:0;overflow:auto">
+<pre style="margin:0;padding:18px 20px;font-family:var(--mono);font-size:12.5px;line-height:1.7;color:var(--p-ink)"><code># 生成令牌 + 执行门禁（失败退出码 1）
+danqing build
+
+# Web
+&lt;html lang="zh-CN" data-theme="light" data-brand="qing"&gt;
+  &lt;link rel="stylesheet" href="danqing/gen/css/danqing.css"&gt;
+
+# 组件里只引用语义
+.btn { background: var(--dq-primary-default); color: var(--dq-primary-on); }
+
+# 其他端
+gen/ts/danqing.ts              TypeScript 字面量常量
+gen/json/danqing.tokens.json   W3C DTCG（Style Dictionary / Figma Tokens 可直接消费）
+gen/scss/_danqing.scss         Sass map + dq-color()
+gen/tailwind/danqing.preset.cjs
+gen/avalonia/Tokens.axaml      ResourceDictionary + ThemeDictionaries
+gen/swift/DesignTokens.swift   gen/compose/DesignTokens.kt
+gen/flutter/design_tokens.dart gen/android/{colors,dimens}.xml</code></pre>
+  </div>
+</section>
+
+<footer>
+  <p>
+    <b>丹青 · Danqing</b> v<span id="ver">—</span> · 色库源自 <a href="https://cncolor.art/" target="_blank" rel="noopener">cncolor.art</a>
+    （386 条传统色，浏览器实机提取）· 色阶推导 / 语义映射 / 门禁与代码以 MIT 许可发布。
+  </p>
+  <p>本页数据由 <code>tools/build.py</code> 生成到 <code>showcase/data.js</code>，与令牌永远同步。</p>
+</footer>
+
+</main>
+
+<script src="./data.js"></script>
+<script>
+(function(){
+  var D = window.DQ;
+  var root = document.documentElement;
+  var hasTokens = !!getComputedStyle(root).getPropertyValue('--dq-bg-base').trim();
+  if(!hasTokens) document.getElementById('warn').classList.add('show');
+  if(!D){ document.body.insertAdjacentHTML('afterbegin','<div class="warn show">缺少 showcase/data.js，请先运行 danqing build</div>'); return; }
+
+  var $ = function(s){ return document.querySelector(s); };
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]; }); }
+
+  /* ---------- 统计 ---------- */
+  var prim = D.families.length * D.steps.length;
+  var sem  = Object.keys(D.semantic.light).reduce(function(n,k){ var v=D.semantic.light[k]; return n + (typeof v==='object'? Object.keys(v).length : 1); },0);
+  var stats = [
+    [prim,'原语色阶'],[sem,'语义令牌 ×2'],[D.brands.length,'品牌预设'],[D.gates.total,'WCAG 门禁'],
+    ['15','端产物'],[ D.meta.palette.unique ,'传统色源']
+  ];
+  $('#stats').innerHTML = stats.map(function(s){ return '<div class="stat"><b>'+s[0]+'</b><span>'+s[1]+'</span></div>'; }).join('');
+  $('#ver').textContent = D.meta.version;
+
+  /* ---------- 色族 ---------- */
+  var reservedSet = {}; Object.keys(D.reserved.map).forEach(function(k){ reservedSet[D.reserved.map[k]] = k; });
+  Object.keys(D.reserved.map).forEach(function(role){
+    var famId = D.reserved.map[role];
+    // 品牌候选族集合 = 全部族 - 保留族 - 中性族
+  });
+  var neutral = D.reserved.neutral;
+  $('#families').innerHTML = D.families.map(function(f){
+    var role = reservedSet[f.id] ? ('保留族 → '+reservedSet[f.id]) : (neutral.indexOf(f.id)>=0 ? '中性族' : '品牌候选');
+    var isRes = !!reservedSet[f.id];
+    return '<div class="fam">'
+      + '<div class="fam-head">'
+      +   '<span class="zh">'+esc(f.name)+'</span>'
+      +   '<span class="py">'+esc(f.pinyin)+' · '+esc(f.id)+'</span>'
+      +   '<span class="tag'+(isRes?' res':'')+'">'+esc(role)+'</span>'
+      +   '<span class="tag">锚点 '+esc(f.anchorName)+' '+esc(f.anchorHex)+'（第 '+esc(f.anchorStep)+' 级）</span>'
+      +   '<span class="intent">'+esc(f.intent)+'</span>'
+      + '</div>'
+      + '<div class="ramp">' + f.steps.map(function(s){
+          return '<div class="sw'+(s.anchor?' anchor':'')+'">'
+            + '<div class="tt"><b>'+esc(s.name)+'</b> '+esc(s.pinyin)+'<br>'+esc(s.step)+' · '+esc(s.hex)
+            + '<br>最近传统色 '+esc(s.nearestHex)+'（'+esc(s.nearestGroup)+'）</div>'
+            + '<div class="chip" style="background:'+s.hex+'"></div>'
+            + '<div class="lb">'+esc(s.step)+'</div></div>';
+        }).join('') + '</div></div>';
+  }).join('');
+
+  $('#reserved').innerHTML = '<table class="tbl"><thead><tr><th>角色</th><th>保留族</th><th>含义</th></tr></thead><tbody>'
+    + Object.keys(D.reserved.map).map(function(role){
+        var fid = D.reserved.map[role];
+        var fam = D.families.filter(function(f){ return f.id===fid; })[0];
+        return '<tr><td><code>'+role+'</code></td><td>'+esc(fam.name)+' '+esc(fam.pinyin)
+          + ' <span style="color:var(--p-ter)">'+esc(fid)+'</span></td><td style="color:var(--p-sub)">'+esc(fam.intent)+'</td></tr>';
+      }).join('')
+    + '<tr><td><code>中性</code></td><td>'+D.reserved.neutral.map(function(n){
+        var f = D.families.filter(function(x){return x.id===n;})[0]; return esc(f.name)+' '+esc(f.pinyin);
+      }).join(' · ')+'</td><td style="color:var(--p-sub)">深色底 / 浅色底 / 正文墨色与反白文字</td></tr>'
+    + '</tbody></table>';
+
+  /* ---------- 品牌 ---------- */
+  function setBrand(id){
+    root.dataset.brand = id;
+    Array.prototype.forEach.call(document.querySelectorAll('.bcard'), function(el){
+      el.classList.toggle('on', el.dataset.b === id);
+    });
+    renderBrandPreview(id);
+  }
+  $('#brandCards').innerHTML = D.brands.map(function(b){
+    return '<div class="bcard'+(b.default?' on':'')+'" data-b="'+b.id+'" tabindex="0" role="button">'
+      + '<div class="top2" style="background:'+b.light.default+';color:'+b.light.on+'">'+esc(b.name)+'</div>'
+      + '<div class="body"><div class="n">'+esc(b.name)+' <span style="font-family:var(--mono);font-size:11px;color:var(--p-ter)">'+esc(b.pinyin)+'</span></div>'
+      + '<div class="d">'+esc(b.desc)+'</div>'
+      + '<div class="a">'+esc(b.audience)+'</div></div></div>';
+  }).join('');
+  $('#brandCards').addEventListener('click', function(e){
+    var c = e.target.closest('.bcard'); if(c) setBrand(c.dataset.b);
+  });
+  $('#brandCards').addEventListener('keydown', function(e){
+    if(e.key==='Enter'||e.key===' '){ var c=e.target.closest('.bcard'); if(c){ e.preventDefault(); setBrand(c.dataset.b);} }
+  });
+  function renderBrandPreview(id){
+    var b = D.brands.filter(function(x){ return x.id===id; })[0]; if(!b) return;
+    var p = root.dataset.theme==='dark' ? b.dark : b.light;
+    $('#brandPreview').innerHTML =
+        '<h4 style="margin-top:0">当前品牌：'+esc(b.name)+'（'+esc(b.familyName)+'族）</h4>'
+      + '<div style="font-size:12.5px;color:var(--p-sub);margin:0 0 14px">'+esc(b.desc)+'</div>'
+      + '<div class="demo-row">'
+      +   '<button class="btn pri">主要操作</button>'
+      +   '<span class="chipx pr">标签</span>'
+      +   '<a href="#brands" style="font-size:13px">链接样式</a>'
+      + '</div>'
+      + '<table class="tbl" style="margin-top:14px"><thead><tr><th>令牌</th><th class="num">值</th></tr></thead><tbody>'
+      + Object.keys(p).map(function(k){ return '<tr><td><code>primary.'+k+'</code></td><td class="num">'+esc(p[k])+'</td></tr>'; }).join('')
+      + '</tbody></table>'
+      + (b.conflict && b.conflict.length
+          ? '<p style="font-size:12px;color:var(--dq-danger-text);margin:10px 0 0">⚠ 与状态色同族：'+b.conflict.join('、')+'（须附图标或文案）</p>'
+          : '<p style="font-size:12px;color:var(--dq-success-text);margin:10px 0 0">✓ 与状态色无冲突</p>');
+  }
+  renderBrandPreview(D.defaultBrand);
+
+  /* 品牌填充/回退表 */
+  $('#brandTable').innerHTML = '<div class="card" style="padding:0;overflow:auto"><table class="tbl">'
+    + '<thead><tr><th>品牌</th><th>色族</th><th>模式</th><th>填充</th><th class="num">其上文字对比</th><th>文字色</th></tr></thead><tbody>'
+    + D.brands.map(function(b){
+        return ['light','dark'].map(function(m){
+          var p = b[m];
+          return '<tr><td>'+esc(b.name)+(b.default?' <span style="color:var(--p-ter)">默认</span>':'')+'</td>'
+            + '<td>'+esc(b.familyName)+'</td><td>'+m+'</td>'
+            + '<td><span style="display:inline-block;width:14px;height:14px;border-radius:3px;background:'+p.default+';vertical-align:-2px;margin-right:6px"></span><code>'+esc(p.default)+'</code></td>'
+            + '<td class="num">'+esc(p.on)+'</td>'
+            + '<td><span style="display:inline-block;width:14px;height:14px;border-radius:3px;background:'+p.text+';vertical-align:-2px;margin-right:6px"></span><code>'+esc(p.text)+'</code></td></tr>';
+        }).join('');
+      }).join('')
+    + '</tbody></table></div>';
+
+  /* ---------- 语义令牌 ---------- */
+  var ROLE_DESC = {
+    bg:'页面级底色：canvas 最外层、base 内容区、sunken 内凹',
+    surface:'元素级表面：default 卡片、raised 抬升、overlay 弹层、variant 次级填充、inverse 反色区',
+    border:'分隔与描边（用 alpha 以自动适配深浅）',
+    text:'文字层级：primary 正文、secondary 说明、tertiary 辅助、disabled 禁用、link 链接',
+    primary:'主操作与选中态。on 是填充之上的前景色 —— 可能是白也可能是墨',
+    accent:'强调与标记（保留族 紫）',
+    success:'成功（保留族 绿）', warning:'警告（保留族 缃）',
+    danger:'危险（保留族 绛）', info:'信息（保留族 苍）',
+    state:'覆盖在任意元素上的交互态层',
+    overlay:'遮罩与毛玻璃', focus:'焦点环与偏移色', skeleton:'骨架屏',
+    chart:'数据可视化十色 + 图表专用灰阶'
+  };
+  var hide = {primary:0,accent:0,success:0,warning:0,danger:0,info:0};
+  $('#tokenGroups').innerHTML = Object.keys(D.semantic.light).map(function(role){
+    var light = D.semantic.light[role], dark = D.semantic.dark[role];
+    var keys = typeof light === 'object' ? Object.keys(light) : [null];
+    return '<div class="fam"><div class="fam-head">'
+      + '<span class="zh" style="font-size:16px"><code style="font-family:var(--mono);font-size:14px">'+role+'</code></span>'
+      + '<span class="intent" style="margin-left:0">'+esc(ROLE_DESC[role]||'')+'</span></div>'
+      + '<div class="toks">' + keys.map(function(k){
+          var lv = k===null ? light : light[k];
+          var dv = k===null ? dark : dark[k];
+          var label = k===null ? role : role+'.'+k;
+          return '<div class="tok"><div class="fill" style="background:'+lv+'"></div>'
+            + '<div class="m"><div class="k">'+esc(label)+'</div>'
+            + '<div class="v">'+esc(lv)+'<br><span style="opacity:.7">'+esc(dv)+'</span></div></div></div>';
+        }).join('') + '</div></div>';
+  }).join('');
+
+  /* ---------- 图表 ---------- */
+  var chart = D.semantic.light.chart;
+  var vals = [62,48,74,35,55,80,42,58,29,66];
+  var cs = [1,2,3,4,5,6,7,8,9,10].map(function(i){ return chart['c'+i]; });
+  $('#chartBars').innerHTML = '<svg viewBox="0 0 660 210" width="100%" height="210" role="img" aria-label="示例柱状图">'
+    + '<line x1="34" y1="2" x2="34" y2="180" stroke="'+chart.grid+'"/>'
+    + '<line x1="34" y1="180" x2="656" y2="180" stroke="'+chart.grid+'"/>'
+    + [0,25,50,75,100].map(function(p){
+        var y = 180 - p*1.7;
+        return '<line x1="30" y1="'+y+'" x2="656" y2="'+y+'" stroke="'+chart.grid+'"/>'
+          + '<text x="24" y="'+(y+4)+'" text-anchor="end" font-size="10" fill="'+chart.label+'">'+p+'</text>';
+      }).join('')
+    + vals.map(function(v,i){
+        var x = 52 + i*60, h = v*1.7;
+        return '<rect x="'+x+'" y="'+(180-h)+'" width="34" height="'+h+'" rx="3" fill="'+cs[i]+'"/>'
+          + '<text x="'+(x+17)+'" y="196" text-anchor="middle" font-size="10" fill="'+chart.label+'">c'+(i+1)+'</text>';
+      }).join('')
+    + '</svg>';
+  $('#chartLegend').innerHTML =
+      '<span><i style="background:'+chart.positive+'"></i>上升</span>'
+    + '<span><i style="background:'+chart.negative+'"></i>下降</span>'
+    + '<span><i style="background:'+chart.neutral+'"></i>持平</span>'
+    + '<span style="color:var(--p-ter)">共 '+cs.length+' 色，相邻色相在色盲模拟下仍有明度差</span>';
+  var TRAD = ['群青','铜青','官绿','秋香','柘黄','银朱','红踯躅','紫紶','檀色','檀褐'];
+  $('#chartList').innerHTML = '<div class="toks">' + cs.map(function(hex,i){
+      var fix = D.chartFix.light && D.chartFix.light['c'+(i+1)];
+      var changed = fix && fix.raw.toUpperCase() !== fix.fixed.toUpperCase();
+      return '<div class="tok"><div class="fill" style="background:'+hex+'"></div>'
+        + '<div class="m"><div class="k">chart.c'+(i+1)+' · '+TRAD[i]+'</div>'
+        + '<div class="v">'+esc(hex)+'<br>'+esc(D.semantic.dark.chart['c'+(i+1)])
+        + (changed?'<br><span style="color:var(--dq-danger-text)">自动修正自 '+esc(fix.raw)+'</span>':'')+'</div></div></div>';
+    }).join('') + '</div>';
+
+  /* ---------- 尺度 ---------- */
+  $('#spaceList').innerHTML = Object.keys(D.scales.space).map(function(k){
+    var v = D.scales.space[k];
+    var skipped = ['7','9','11','14','18'].indexOf(k) < 0;
+    return '<div class="scale-row"><span class="k">space.'+k+'</span>'
+      + '<span class="bar" style="width:'+Math.max(3,v*1.5)+'px"></span>'
+      + '<span class="v">'+v+'px</span></div>';
+  }).join('');
+  $('#radiusList').innerHTML = Object.keys(D.scales.radius).map(function(k){
+    var v = D.scales.radius[k];
+    return '<div class="r"><div class="bx" style="border-radius:'+(v>64?64:v)+'px"></div>'+k+'<br><span style="font-family:var(--mono)">'+v+'</span></div>';
+  }).join('');
+  $('#shadowList').innerHTML = ['1','2','3','4','5'].map(function(k){
+    return '<div><div class="s" style="box-shadow:var(--dq-elev-'+k+')">elev '+k+'</div></div>';
+  }).join('');
+  $('#typeList').innerHTML = Object.keys(D.scales.typography.scale).map(function(k){
+    var t = D.scales.typography.scale[k];
+    return '<div class="scale-row"><span class="k">'+k+'</span>'
+      + '<span style="font-size:'+Math.min(t.size,26)+'px;font-weight:'+t.weight+';font-family:'+(k==='display'||k==='titleLg'?'var(--serif)':'var(--sans)')+'">字 Aa 字</span>'
+      + '<span class="v">'+t.size+'/'+t.lineHeight+' w'+t.weight+'</span></div>';
+  }).join('');
+
+  /* ---------- 门禁 ---------- */
+  var g = D.gates;
+  $('#gateSummary').innerHTML = '<b>'+g.total+'</b><span>项检查 · 失败 <b>'+g.failed+'</b> 项 · 阈值：正文 4.5:1，非文本 3:1 · 前景 alpha 先合成后计算</span>';
+  $('#gateGroups').innerHTML = g.groups.map(function(grp){
+    var pass = grp.items.filter(function(i){ return i.ok; }).length;
+    return '<div class="gate"><div class="gh">'+esc(grp.name)
+      + '<span class="n">'+pass+'/'+grp.items.length+'</span></div><ul>'
+      + grp.items.map(function(i){
+          return '<li><span>'+esc(i.label)+'</span><span class="r '+(i.ok?'pass':'fail')+'">'+i.ratio+':1</span></li>';
+        }).join('') + '</ul></div>';
+  }).join('');
+
+  /* ---------- 端产物 ---------- */
+  var PRODS = [
+    ['gen/css/danqing.css','Web · CSS 自定义属性，含品牌与深色覆盖'],
+    ['gen/scss/_danqing.scss','Sass · 变量 + 嵌套 map + dq-color()'],
+    ['gen/ts/danqing.ts','TypeScript · 字面量常量与类型'],
+    ['gen/json/danqing.tokens.json','W3C DTCG · Style Dictionary / Figma Tokens'],
+    ['gen/tailwind/danqing.preset.cjs','Tailwind · theme.extend 预设'],
+    ['gen/avalonia/Tokens.axaml','Avalonia · ResourceDictionary + ThemeDictionaries'],
+    ['gen/swift/DesignTokens.swift','SwiftUI · 枚举 + Color(hex:)'],
+    ['gen/compose/DesignTokens.kt','Jetpack Compose · object + dp/sp'],
+    ['gen/flutter/design_tokens.dart','Flutter · 常量类'],
+    ['gen/android/colors.xml','Android · 浅/深双份 color'],
+    ['gen/android/dimens.xml','Android · dp/sp 尺度'],
+    ['tokens/danqing.tokens.json','全端 · 已解析的完整真源快照'],
+    ['tokens/source.json','唯一人手真源（改这里）'],
+    ['data/chinese-colors.json','386 条传统色原始数据'],
+    ['showcase/data.js','本页数据（与令牌同步）']
+  ];
+  $('#prodList').innerHTML = PRODS.map(function(p){
+    return '<div class="prod"><div class="n">'+esc(p[0])+'</div><div class="d">'+esc(p[1])+'</div></div>';
+  }).join('');
+
+  /* ---------- 主题切换 ---------- */
+  function setTheme(t){
+    root.dataset.theme = t;
+    $('#t-light').setAttribute('aria-pressed', String(t==='light'));
+    $('#t-dark').setAttribute('aria-pressed', String(t==='dark'));
+    renderBrandPreview(root.dataset.brand || D.defaultBrand);
+  }
+  $('#t-light').addEventListener('click', function(){ setTheme('light'); });
+  $('#t-dark').addEventListener('click', function(){ setTheme('dark'); });
+  if(window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches && !hasTokens) setTheme('dark');
+  setTheme(hasTokens && matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+})();
+</script>
+</body>
+</html>

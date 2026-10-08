@@ -1,0 +1,298 @@
+{
+  "$schema": "https://danqing.design/schema/source-2.1.json",
+  "meta": {
+    "name": "丹青",
+    "nameEn": "Danqing",
+    "tagline": "中国传统色彩设计系统",
+    "id": "danqing",
+    "prefix": "dq",
+    "version": "2.3.0",
+    "date": "2026-10-08",
+    "license": "MIT",
+    "scope": "application-agnostic",
+    "palette": {
+      "source": "https://cncolor.art/",
+      "capturedAt": "2026-10-08",
+      "total": 386,
+      "unique": 384,
+      "note": "中国传统色，浏览器实机提取（getComputedStyle），按色系分组"
+    },
+    "naming": {
+      "tier1": "原语层 cn.*：中国传统色命名，无语义。cn.qing.600 = 群青",
+      "tier2": "语义层 sys.*：通用应用语义。sys.text.primary、sys.primary.default",
+      "tier3": "扩展层 ext.*：领域扩展，按需引入。ext.reading.*",
+      "rule": "应用代码只允许引用 tier2 / tier3；tier1 仅被 tier2 引用，不得直出到界面"
+    }
+  },
+
+  "ramp": {
+    "steps": [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950],
+    "lightnessGrid": [0.975, 0.910, 0.836, 0.762, 0.688, 0.614, 0.540, 0.466, 0.392, 0.300, 0.215],
+    "note": "OKLab L 等距网格；锚点级写回传统色原值，其余级在 OKLCh 恒色相下按 L 派生并降彩度收进 sRGB 色域",
+    "taper": { "floor": 0.10, "slope": 0.90, "exponent": 1.6 }
+  },
+
+  "families": [
+    {
+      "id": "qing", "name": "青", "pinyin": "Qīng", "hue": "蓝",
+      "anchorHex": "#2E59A7", "anchorName": "群青", "anchorPinyin": "Qún Qīng",
+      "intent": "品牌候选 · 主色：主操作、选中态、链接、进度",
+      "connotation": "青出于蓝。中国传统「五色」之正色，兼指蓝与东方之色，沉着而不冷峻。",
+      "alternatives": ["青雘", "碧落", "监德"]
+    },
+    {
+      "id": "zhu", "name": "朱", "pinyin": "Zhū", "hue": "红",
+      "anchorHex": "#D12920", "anchorName": "银朱", "anchorPinyin": "Yín Zhū",
+      "intent": "品牌候选 · 主色：朱批朱印，中式印记感最强",
+      "connotation": "朱为赤之正，印章、批点、节庆皆用之。暖而正，非数码红。",
+      "alternatives": ["赤缇", "丹罽", "海天霞"]
+    },
+    {
+      "id": "xiang", "name": "缃", "pinyin": "Xiāng", "hue": "黄",
+      "anchorHex": "#C67915", "anchorName": "柘黄", "anchorPinyin": "Zhè Huáng",
+      "intent": "保留族 · 警告：待处理、降级、需确认、配额接近上限",
+      "connotation": "缃为浅黄书衣之色，柘黄为隋唐天子常服色。温暖而不刺目。",
+      "alternatives": ["秋香", "松花", "缃叶"]
+    },
+    {
+      "id": "lv", "name": "绿", "pinyin": "Lǜ", "hue": "绿",
+      "anchorHex": "#2A6E3F", "anchorName": "官绿", "anchorPinyin": "Guān Lǜ",
+      "intent": "保留族 · 成功：完成、已生效、可用、正向变化",
+      "connotation": "官绿为正绿，明代官服色。青绿山水之绿，沉稳而非荧光。",
+      "alternatives": ["庭芜绿", "翠微", "缥碧"]
+    },
+    {
+      "id": "jiang", "name": "绛", "pinyin": "Jiàng", "hue": "深红",
+      "anchorHex": "#8F1D22", "anchorName": "朱樱", "anchorPinyin": "Zhū Yīng",
+      "intent": "保留族 · 危险：删除、不可恢复、错误、失败",
+      "connotation": "绛为大赤深色。与「朱」同色相不同明度，余光可辨，故强调与危险不混淆。",
+      "alternatives": ["魏红", "地血", "胭脂紫"]
+    },
+    {
+      "id": "dai", "name": "黛", "pinyin": "Dài", "hue": "紫灰",
+      "anchorHex": "#45465E", "anchorName": "青黛", "anchorPinyin": "Qīng Dài",
+      "intent": "品牌候选 · 主色：低饱和克制型；亦可作通用次级色",
+      "connotation": "青黛为画眉之石青，冷紫灰。用以承接主色而不争夺注意力。",
+      "alternatives": ["暮山紫", "鸦雏", "紫鼠"]
+    },
+    {
+      "id": "mo", "name": "墨", "pinyin": "Mò", "hue": "冷黑",
+      "anchorHex": "#1E2732", "anchorName": "瑾瑜", "anchorPinyin": "Jǐn Yú",
+      "intent": "中性·深：正文墨色、深色主题表面",
+      "connotation": "墨分五色。瑾瑜为带青的深黑，比纯黑柔和，长看不涩。",
+      "alternatives": ["京元", "螺子黛", "玄天"]
+    },
+    {
+      "id": "su", "name": "素", "pinyin": "Sù", "hue": "暖白",
+      "anchorHex": "#F5F2E9", "anchorName": "凝脂", "anchorPinyin": "Níng Zhī",
+      "intent": "中性·浅：页面底色、浅色主题表面、反白文字",
+      "connotation": "素为本色无饰之帛。凝脂为宣纸暖白，比纯白低对比、低眩光。",
+      "alternatives": ["缟羽", "月白", "玉色"]
+    },
+    {
+      "id": "cang", "name": "苍", "pinyin": "Cāng", "hue": "青绿",
+      "anchorHex": "#3D8E86", "anchorName": "铜青", "anchorPinyin": "Tóng Qīng",
+      "intent": "信息色保留族：中性提示、说明、系统消息",
+      "connotation": "苍为深青带绿。铜青是青铜器锈色，青绿山水的过渡色，冷静而不冷硬。",
+      "alternatives": ["青雘", "石绿", "二绿"]
+    },
+    {
+      "id": "zi", "name": "紫", "pinyin": "Zǐ", "hue": "紫",
+      "anchorHex": "#7D5284", "anchorName": "紫紶", "anchorPinyin": "Zǐ Qū",
+      "intent": "强调色保留族：选中、标记、徽标、计数",
+      "connotation": "紫气东来。紫色自唐以降为贵色，明度低于朱，与朱并用不争。",
+      "alternatives": ["三公子", "紫府", "齐紫"]
+    },
+    {
+      "id": "tan", "name": "檀", "pinyin": "Tán", "hue": "赭褐",
+      "anchorHex": "#B26D5D", "anchorName": "檀色", "anchorPinyin": "Tán Sè",
+      "intent": "品牌候选：温厚、人文、在地感",
+      "connotation": "檀为香木，色近赭石。低饱和的暖褐，是纸墨之外最「旧物」的颜色。",
+      "alternatives": ["棠梨", "紫磨金", "老僧衣"]
+    }
+  ],
+
+  "reservedFamilies": {
+    "note": "保留族专供语义状态色，不作为品牌候选。品牌只在非保留族中取色，可从结构上避免「品牌主色 = 某状态色」。",
+    "map": {
+      "accent": "zi",
+      "success": "lv",
+      "warning": "xiang",
+      "danger": "jiang",
+      "info": "cang"
+    },
+    "neutral": ["mo", "su"]
+  },
+
+  "brands": [
+    {
+      "id": "qing", "name": "群青", "pinyin": "Qún Qīng", "family": "qing",
+      "defaultDevice": true,
+      "desc": "沉静理性，蓝为通用商务与工具类首选，久看不躁",
+      "audience": "工具、效率、金融、企业后台"
+    },
+    {
+      "id": "zhu", "name": "银朱", "pinyin": "Yín Zhū", "family": "zhu",
+      "desc": "中式印记感最强，朱批朱印由此而来",
+      "audience": "内容、文化、社区、生活方式"
+    },
+    {
+      "id": "dai", "name": "青黛", "pinyin": "Qīng Dài", "family": "dai",
+      "desc": "冷紫灰，低饱和的克制表达，适合长文与专业场景",
+      "audience": "阅读、写作、设计工具、专业软件"
+    },
+    {
+      "id": "tan", "name": "檀色", "pinyin": "Tán Sè", "family": "tan",
+      "desc": "温厚赭褐，纸墨之外的旧物感，在地性强",
+      "audience": "文创、出版、手作、在地生活"
+    }
+  ],
+
+  "semantic": {
+    "light": {
+      "inkRgb": "30,39,50",
+      "bg": { "canvas": "@su.100", "base": "@su.50", "sunken": "@su.200", "inverse": "@mo.900" },
+      "surface": {
+        "default": "#FFFFFF", "raised": "#FFFFFF", "overlay": "#FFFFFF",
+        "sunken": "@su.100", "variant": "@su.200", "inverse": "@mo.800"
+      },
+      "border": {
+        "subtle": "rgba(@inkRgb,0.08)", "default": "rgba(@inkRgb,0.14)",
+        "strong": "rgba(@inkRgb,0.28)", "inverse": "rgba(255,255,255,0.24)"
+      },
+      "text": {
+        "primary": "@mo.900", "secondary": "rgba(@inkRgb,0.68)", "tertiary": "rgba(@inkRgb,0.55)",
+        "disabled": "rgba(@inkRgb,0.34)", "inverse": "@su.50", "link": "@brand.text"
+      },
+      "primary": { "default": "@brand.fill", "hover": "@brand.fillHover", "active": "@brand.fillActive", "subtle": "@brand.subtle", "border": "@brand.border", "text": "@brand.text", "on": "@brand.on" },
+      "accent": { "default": "@accent.fill", "subtle": "@accent.subtle", "border": "@accent.border", "text": "@accent.text", "on": "@accent.on" },
+      "success": { "default": "@lv.fill", "subtle": "@lv.subtle", "border": "@lv.border", "text": "@lv.text", "on": "@lv.on" },
+      "warning": { "default": "@xiang.fill", "subtle": "@xiang.subtle", "border": "@xiang.border", "text": "@xiang.text", "on": "@xiang.on" },
+      "danger": { "default": "@jiang.fill", "subtle": "@jiang.subtle", "border": "@jiang.border", "text": "@jiang.text", "on": "@jiang.on" },
+      "info": { "default": "@cang.fill", "subtle": "@cang.subtle", "border": "@cang.border", "text": "@cang.text", "on": "@cang.on" },
+      "state": {
+        "hover": "rgba(@inkRgb,0.04)", "pressed": "rgba(@inkRgb,0.08)",
+        "selected": "rgba(@inkRgb,0.12)", "drag": "rgba(@inkRgb,0.16)", "disabled": "rgba(@inkRgb,0.05)"
+      },
+      "overlay": { "scrim": "rgba(20,23,28,0.45)", "scrimStrong": "rgba(20,23,28,0.68)", "glass": "rgba(255,255,255,0.72)" },
+      "focus": { "ring": "@brand.fill", "offset": "#FFFFFF" },
+      "skeleton": { "base": "rgba(@inkRgb,0.07)", "sheen": "rgba(@inkRgb,0.03)" },
+      "chart": {
+        "c1": "#2E59A7", "c2": "#3D8E86", "c3": "#2A6E3F", "c4": "#BF9C46",
+        "c5": "#C67915", "c6": "#D12920", "c7": "#B83570", "c8": "#7D5284",
+        "c9": "#B26D5D", "c10": "#945635",
+        "grid": "rgba(@inkRgb,0.10)", "axis": "rgba(@inkRgb,0.45)", "label": "rgba(@inkRgb,0.68)",
+        "positive": "@lv.text", "negative": "@jiang.text", "neutral": "rgba(@inkRgb,0.45)"
+      }
+    },
+    "dark": {
+      "inkRgb": "212,229,239",
+      "bg": { "canvas": "#101318", "base": "#14171C", "sunken": "#0E1116", "inverse": "@su.50" },
+      "surface": {
+        "default": "@mo.900", "raised": "@mo.800", "overlay": "@mo.800",
+        "sunken": "#0E1116", "variant": "@mo.800", "inverse": "@su.50"
+      },
+      "border": {
+        "subtle": "rgba(@inkRgb,0.09)", "default": "rgba(@inkRgb,0.16)",
+        "strong": "rgba(@inkRgb,0.30)", "inverse": "rgba(30,39,50,0.24)"
+      },
+      "text": {
+        "primary": "@su.50", "secondary": "rgba(@inkRgb,0.72)", "tertiary": "rgba(@inkRgb,0.56)",
+        "disabled": "rgba(@inkRgb,0.40)", "inverse": "#1E2732", "link": "@brand.text"
+      },
+      "primary": { "default": "@brand.fill", "hover": "@brand.fillHover", "active": "@brand.fillActive", "subtle": "@brand.subtle", "border": "@brand.border", "text": "@brand.text", "on": "@brand.on" },
+      "accent": { "default": "@accent.fill", "subtle": "@accent.subtle", "border": "@accent.border", "text": "@accent.text", "on": "@accent.on" },
+      "success": { "default": "@lv.fill", "subtle": "@lv.subtle", "border": "@lv.border", "text": "@lv.text", "on": "@lv.on" },
+      "warning": { "default": "@xiang.fill", "subtle": "@xiang.subtle", "border": "@xiang.border", "text": "@xiang.text", "on": "@xiang.on" },
+      "danger": { "default": "@jiang.fill", "subtle": "@jiang.subtle", "border": "@jiang.border", "text": "@jiang.text", "on": "@jiang.on" },
+      "info": { "default": "@cang.fill", "subtle": "@cang.subtle", "border": "@cang.border", "text": "@cang.text", "on": "@cang.on" },
+      "state": {
+        "hover": "rgba(@inkRgb,0.06)", "pressed": "rgba(@inkRgb,0.10)",
+        "selected": "rgba(@inkRgb,0.14)", "drag": "rgba(@inkRgb,0.18)", "disabled": "rgba(@inkRgb,0.06)"
+      },
+      "overlay": { "scrim": "rgba(0,0,0,0.62)", "scrimStrong": "rgba(0,0,0,0.78)", "glass": "rgba(20,23,28,0.72)" },
+      "focus": { "ring": "@brand.fill", "offset": "#14171C" },
+      "skeleton": { "base": "rgba(@inkRgb,0.09)", "sheen": "rgba(@inkRgb,0.04)" },
+      "chart": {
+        "c1": "#6B8FD4", "c2": "#4FB3A6", "c3": "#4E9C63", "c4": "#D4B36A",
+        "c5": "#DE9A45", "c6": "#E4665C", "c7": "#D9739E", "c8": "#A98BC0",
+        "c9": "#D69A86", "c10": "#C08A6B",
+        "grid": "rgba(@inkRgb,0.12)", "axis": "rgba(@inkRgb,0.45)", "label": "rgba(@inkRgb,0.72)",
+        "positive": "@lv.text", "negative": "@jiang.text", "neutral": "rgba(@inkRgb,0.45)"
+      }
+    }
+  },
+
+  "scales": {
+    "space": { "0": 0, "1": 4, "2": 8, "3": 12, "4": 16, "5": 20, "6": 24, "8": 32, "10": 40, "12": 48, "16": 64, "20": 80, "24": 96 },
+    "radius": { "none": 0, "xs": 4, "sm": 8, "md": 12, "lg": 16, "xl": 20, "2xl": 28, "pill": 999 },
+    "borderWidth": { "none": 0, "hairline": 1, "thick": 2, "heavy": 4 },
+    "opacity": { "disabled": 0.38, "muted": 0.6, "full": 1 },
+    "zIndex": { "base": 0, "raised": 10, "sticky": 100, "drawer": 400, "modal": 500, "popover": 600, "toast": 700, "tooltip": 800 },
+    "icon": { "xs": 12, "sm": 16, "md": 20, "lg": 24, "xl": 32, "2xl": 40 },
+    "touch": { "min": 44, "comfortable": 48 },
+    "container": { "form": 480, "prose": 640, "content": 960, "wide": 1280, "full": 1600 },
+    "breakpoint": {
+      "compact": { "max": 599, "nav": "底部标签栏", "columns": 1 },
+      "medium": { "min": 600, "max": 839, "nav": "图标导航轨 80", "columns": 1 },
+      "expanded": { "min": 840, "max": 1199, "nav": "展开式侧边导航 232", "columns": 2 },
+      "large": { "min": 1200, "nav": "侧边导航 232 + 二级栏", "columns": 3 }
+    },
+    "elevation": {
+      "0": "none",
+      "1": "0 1px 2px rgba(20,23,28,0.06), 0 1px 1px rgba(20,23,28,0.04)",
+      "2": "0 2px 6px rgba(20,23,28,0.08), 0 1px 2px rgba(20,23,28,0.04)",
+      "3": "0 6px 16px rgba(20,23,28,0.10), 0 2px 6px rgba(20,23,28,0.05)",
+      "4": "0 12px 28px rgba(20,23,28,0.14), 0 4px 10px rgba(20,23,28,0.06)",
+      "5": "0 24px 48px rgba(20,23,28,0.18), 0 8px 20px rgba(20,23,28,0.08)"
+    },
+    "typography": {
+      "family": {
+        "ui": { "cn": "思源黑体 Noto Sans SC", "en": "Inter", "stack": "\"Inter\",\"Noto Sans SC\",\"Source Han Sans SC\",\"PingFang SC\",\"Microsoft YaHei\",system-ui,sans-serif" },
+        "serif": { "cn": "思源宋体 Noto Serif SC", "en": "Source Serif 4", "stack": "\"Source Serif 4\",\"Noto Serif SC\",\"Source Han Serif SC\",\"Songti SC\",\"SimSun\",Georgia,serif" },
+        "mono": { "cn": "等宽", "en": "JetBrains Mono", "stack": "\"JetBrains Mono\",\"SFMono-Regular\",Consolas,monospace" },
+        "number": { "cn": "等宽数字", "en": "Inter Tabular", "stack": "\"Inter\",\"DIN Alternate\",system-ui,sans-serif", "feature": "font-variant-numeric: tabular-nums" }
+      },
+      "weight": { "regular": 400, "medium": 500, "semibold": 600, "bold": 700 },
+      "letterSpacing": { "tight": "-0.01em", "normal": "0", "wide": "0.02em", "caps": "0.08em" },
+      "scale": {
+        "caption": { "size": 12, "lineHeight": 1.5, "weight": 400, "usage": "徽标、时间戳、辅助说明" },
+        "bodySm": { "size": 13, "lineHeight": 1.6, "weight": 400, "usage": "元信息、列表副标题" },
+        "body": { "size": 14, "lineHeight": 1.65, "weight": 400, "usage": "界面正文（UI 默认）" },
+        "bodyLg": { "size": 16, "lineHeight": 1.7, "weight": 400, "usage": "正文强调、移动端界面正文" },
+        "titleSm": { "size": 18, "lineHeight": 1.45, "weight": 600, "usage": "卡片标题、面板标题" },
+        "title": { "size": 22, "lineHeight": 1.35, "weight": 600, "usage": "页面标题" },
+        "titleLg": { "size": 28, "lineHeight": 1.25, "weight": 700, "usage": "桌面端页面大标题" },
+        "display": { "size": 38, "lineHeight": 1.15, "weight": 700, "usage": "空态标题、首屏" }
+      }
+    },
+    "motion": {
+      "duration": { "instant": 80, "fast": 140, "normal": 220, "slow": 320, "deliberate": 420 },
+      "easing": {
+        "standard": "cubic-bezier(0.2,0,0,1)",
+        "decelerate": "cubic-bezier(0,0,0,1)",
+        "accelerate": "cubic-bezier(0.3,0,1,1)",
+        "spring": "cubic-bezier(0.34,1.2,0.64,1)"
+      },
+      "reducedMotion": { "duration": 0, "policy": "prefers-reduced-motion 下所有位移/缩放归零，仅保留 ≤80ms 的颜色淡变" }
+    }
+  },
+
+  "extensions": {
+    "reading": {
+      "id": "ext.reading",
+      "desc": "领域扩展示例：长文阅读场景。核心系统不含任何阅读概念，按需引入本扩展。",
+      "papers": [
+        { "id": "paper", "name": "素笺", "pinyin": "Sù Jiān", "desc": "宣纸暖白 · 默认", "bgName": "凝脂", "bg": "#F5F2E9", "textName": "京元", "text": "#31322C", "sub": "#6B6A5E", "widget": "rgba(49,50,44,0.10)" },
+        { "id": "white", "name": "缟", "pinyin": "Gǎo", "desc": "缟素纯白 · 强光环境", "bgName": "缟羽", "bg": "#EFEFEC", "textName": "瑾瑜", "text": "#1E2732", "sub": "#5C6470", "widget": "rgba(30,39,50,0.10)" },
+        { "id": "green", "name": "天缥", "pinyin": "Tiān Piǎo", "desc": "天缥护眼青 · 长时间阅读", "bgName": "天缥", "bg": "#D5EBE1", "textName": "螺子黛", "text": "#13393E", "sub": "#3F5F5D", "widget": "rgba(19,57,62,0.12)" },
+        { "id": "night", "name": "夜", "pinyin": "Yè", "desc": "墨夜 · 暗环境", "bgName": "瑾瑜", "bg": "#1E2732", "textName": "月白", "text": "#D4E5EF", "sub": "#93A6B4", "widget": "rgba(212,229,239,0.14)" }
+      ],
+      "fontSize": { "min": 14, "max": 36, "default": 19, "step": 1 },
+      "lineHeight": { "tight": 1.5, "normal": 1.75, "loose": 2.0 },
+      "measure": { "narrow": 560, "default": 640, "wide": 720 },
+      "indent": { "none": 0, "half": 0.5, "full": 1.0 },
+      "letterSpacing": { "tight": "0", "normal": "0.01em", "loose": "0.03em" }
+    }
+  }
+}

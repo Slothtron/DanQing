@@ -1,0 +1,27 @@
+[package]
+name = "danqing"
+version = "2.3.0"
+edition = "2021"
+rust-version = "1.74"
+description = "丹青 · 中国传统色彩设计系统 —— 令牌构建器、门禁与多端产物生成器"
+keywords = ["design-system", "design-tokens", "dtcg", "oklab", "accessibility", "wcag"]
+license = "MIT"
+repository = "https://github.com/Slothtron/Danqing"
+homepage = "https://github.com/Slothtron/Danqing"
+readme = "README.md"
+exclude = ["reference/**", "target/**"]
+
+[[bin]]
+name = "danqing"
+path = "src/main.rs"
+
+[dependencies]
+# preserve_order：serde_json 默认用 BTreeMap（按键排序），会打乱 Python 版
+# dict 的插入顺序；开启后走 IndexMap，保证产物内容与旧实现逐字节一致。
+serde_json = { version = "1", features = ["preserve_order"] }
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+panic = "abort"

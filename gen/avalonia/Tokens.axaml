@@ -1,0 +1,384 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!-- 丹青 Danqing · Avalonia 令牌基座（生成物，勿手改） -->
+  <!-- 真源：tokens/source.json v2.3.0 · 生成器：danqing build -->
+  <!-- 面层禁止直接引用 SystemControl*/Card*/TextFill* 等框架键，一律走 Dq 语义键 -->
+  <!-- 品牌无关：primary.* / text.link / focus.ring 在 brands/<id>.axaml，须与基座同时合并恰好一支 -->
+  <!-- 青 Qīng · 锚点 群青 #2E59A7 -->
+  <SolidColorBrush x:Key="DqCnQing50" Color="#F2F7FF" />
+  <SolidColorBrush x:Key="DqCnQing100" Color="#D1E2FF" />
+  <SolidColorBrush x:Key="DqCnQing200" Color="#B1CAF6" />
+  <SolidColorBrush x:Key="DqCnQing300" Color="#92B2EB" />
+  <SolidColorBrush x:Key="DqCnQing400" Color="#759BDC" />
+  <SolidColorBrush x:Key="DqCnQing500" Color="#5A83CC" />
+  <SolidColorBrush x:Key="DqCnQing600" Color="#416CBA" />
+  <SolidColorBrush x:Key="DqCnQing700" Color="#2E59A7" />
+  <SolidColorBrush x:Key="DqCnQing800" Color="#1A4188" />
+  <SolidColorBrush x:Key="DqCnQing900" Color="#092964" />
+  <SolidColorBrush x:Key="DqCnQing950" Color="#011541" />
+  <!-- 朱 Zhū · 锚点 银朱 #D12920 -->
+  <SolidColorBrush x:Key="DqCnZhu50" Color="#FFF4F2" />
+  <SolidColorBrush x:Key="DqCnZhu100" Color="#FFD6D0" />
+  <SolidColorBrush x:Key="DqCnZhu200" Color="#FFB3A7" />
+  <SolidColorBrush x:Key="DqCnZhu300" Color="#FF8C7C" />
+  <SolidColorBrush x:Key="DqCnZhu400" Color="#F56757" />
+  <SolidColorBrush x:Key="DqCnZhu500" Color="#E24437" />
+  <SolidColorBrush x:Key="DqCnZhu600" Color="#D12920" />
+  <SolidColorBrush x:Key="DqCnZhu700" Color="#AB0003" />
+  <SolidColorBrush x:Key="DqCnZhu800" Color="#870001" />
+  <SolidColorBrush x:Key="DqCnZhu900" Color="#5D0001" />
+  <SolidColorBrush x:Key="DqCnZhu950" Color="#390000" />
+  <!-- 缃 Xiāng · 锚点 柘黄 #C67915 -->
+  <SolidColorBrush x:Key="DqCnXiang50" Color="#FFF5EB" />
+  <SolidColorBrush x:Key="DqCnXiang100" Color="#FEDAB8" />
+  <SolidColorBrush x:Key="DqCnXiang200" Color="#F3BD89" />
+  <SolidColorBrush x:Key="DqCnXiang300" Color="#E5A15C" />
+  <SolidColorBrush x:Key="DqCnXiang400" Color="#D38731" />
+  <SolidColorBrush x:Key="DqCnXiang500" Color="#C67915" />
+  <SolidColorBrush x:Key="DqCnXiang600" Color="#9E5D00" />
+  <SolidColorBrush x:Key="DqCnXiang700" Color="#814B00" />
+  <SolidColorBrush x:Key="DqCnXiang800" Color="#653A00" />
+  <SolidColorBrush x:Key="DqCnXiang900" Color="#442500" />
+  <SolidColorBrush x:Key="DqCnXiang950" Color="#281400" />
+  <!-- 绿 Lǜ · 锚点 官绿 #2A6E3F -->
+  <SolidColorBrush x:Key="DqCnLv50" Color="#EFFAF1" />
+  <SolidColorBrush x:Key="DqCnLv100" Color="#D2E8D6" />
+  <SolidColorBrush x:Key="DqCnLv200" Color="#B2D3B8" />
+  <SolidColorBrush x:Key="DqCnLv300" Color="#93BE9C" />
+  <SolidColorBrush x:Key="DqCnLv400" Color="#75A981" />
+  <SolidColorBrush x:Key="DqCnLv500" Color="#599468" />
+  <SolidColorBrush x:Key="DqCnLv600" Color="#3E7F50" />
+  <SolidColorBrush x:Key="DqCnLv700" Color="#2A6E3F" />
+  <SolidColorBrush x:Key="DqCnLv800" Color="#115329" />
+  <SolidColorBrush x:Key="DqCnLv900" Color="#003917" />
+  <SolidColorBrush x:Key="DqCnLv950" Color="#00210A" />
+  <!-- 绛 Jiàng · 锚点 朱樱 #8F1D22 -->
+  <SolidColorBrush x:Key="DqCnJiang50" Color="#FFF4F3" />
+  <SolidColorBrush x:Key="DqCnJiang100" Color="#FFD6D2" />
+  <SolidColorBrush x:Key="DqCnJiang200" Color="#F4B8B3" />
+  <SolidColorBrush x:Key="DqCnJiang300" Color="#E79B95" />
+  <SolidColorBrush x:Key="DqCnJiang400" Color="#D77E78" />
+  <SolidColorBrush x:Key="DqCnJiang500" Color="#C5635E" />
+  <SolidColorBrush x:Key="DqCnJiang600" Color="#B14745" />
+  <SolidColorBrush x:Key="DqCnJiang700" Color="#9B2C2D" />
+  <SolidColorBrush x:Key="DqCnJiang800" Color="#8F1D22" />
+  <SolidColorBrush x:Key="DqCnJiang900" Color="#5C000A" />
+  <SolidColorBrush x:Key="DqCnJiang950" Color="#380004" />
+  <!-- 黛 Dài · 锚点 青黛 #45465E -->
+  <SolidColorBrush x:Key="DqCnDai50" Color="#F6F6FB" />
+  <SolidColorBrush x:Key="DqCnDai100" Color="#E0E0EA" />
+  <SolidColorBrush x:Key="DqCnDai200" Color="#C7C8D5" />
+  <SolidColorBrush x:Key="DqCnDai300" Color="#AFB0C1" />
+  <SolidColorBrush x:Key="DqCnDai400" Color="#9899AD" />
+  <SolidColorBrush x:Key="DqCnDai500" Color="#818298" />
+  <SolidColorBrush x:Key="DqCnDai600" Color="#6B6C84" />
+  <SolidColorBrush x:Key="DqCnDai700" Color="#565770" />
+  <SolidColorBrush x:Key="DqCnDai800" Color="#45465E" />
+  <SolidColorBrush x:Key="DqCnDai900" Color="#2B2C40" />
+  <SolidColorBrush x:Key="DqCnDai950" Color="#171827" />
+  <!-- 墨 Mò · 锚点 瑾瑜 #1E2732 -->
+  <SolidColorBrush x:Key="DqCnMo50" Color="#F5F7F9" />
+  <SolidColorBrush x:Key="DqCnMo100" Color="#DEE2E6" />
+  <SolidColorBrush x:Key="DqCnMo200" Color="#C5CAD0" />
+  <SolidColorBrush x:Key="DqCnMo300" Color="#ACB2BA" />
+  <SolidColorBrush x:Key="DqCnMo400" Color="#949BA4" />
+  <SolidColorBrush x:Key="DqCnMo500" Color="#7D858F" />
+  <SolidColorBrush x:Key="DqCnMo600" Color="#67707A" />
+  <SolidColorBrush x:Key="DqCnMo700" Color="#525B66" />
+  <SolidColorBrush x:Key="DqCnMo800" Color="#3D4652" />
+  <SolidColorBrush x:Key="DqCnMo900" Color="#1E2732" />
+  <SolidColorBrush x:Key="DqCnMo950" Color="#121A24" />
+  <!-- 素 Sù · 锚点 凝脂 #F5F2E9 -->
+  <SolidColorBrush x:Key="DqCnSu50" Color="#F5F2E9" />
+  <SolidColorBrush x:Key="DqCnSu100" Color="#E4E1D8" />
+  <SolidColorBrush x:Key="DqCnSu200" Color="#CCC9C1" />
+  <SolidColorBrush x:Key="DqCnSu300" Color="#B4B2AA" />
+  <SolidColorBrush x:Key="DqCnSu400" Color="#9D9B93" />
+  <SolidColorBrush x:Key="DqCnSu500" Color="#86847E" />
+  <SolidColorBrush x:Key="DqCnSu600" Color="#716F69" />
+  <SolidColorBrush x:Key="DqCnSu700" Color="#5B5A54" />
+  <SolidColorBrush x:Key="DqCnSu800" Color="#474541" />
+  <SolidColorBrush x:Key="DqCnSu900" Color="#2F2E2A" />
+  <SolidColorBrush x:Key="DqCnSu950" Color="#1A1917" />
+  <!-- 苍 Cāng · 锚点 铜青 #3D8E86 -->
+  <SolidColorBrush x:Key="DqCnCang50" Color="#ECFAF8" />
+  <SolidColorBrush x:Key="DqCnCang100" Color="#CBE9E4" />
+  <SolidColorBrush x:Key="DqCnCang200" Color="#A6D4CE" />
+  <SolidColorBrush x:Key="DqCnCang300" Color="#84BFB8" />
+  <SolidColorBrush x:Key="DqCnCang400" Color="#63AAA2" />
+  <SolidColorBrush x:Key="DqCnCang500" Color="#3D8E86" />
+  <SolidColorBrush x:Key="DqCnCang600" Color="#2D7D76" />
+  <SolidColorBrush x:Key="DqCnCang700" Color="#186760" />
+  <SolidColorBrush x:Key="DqCnCang800" Color="#04514B" />
+  <SolidColorBrush x:Key="DqCnCang900" Color="#003632" />
+  <SolidColorBrush x:Key="DqCnCang950" Color="#001F1C" />
+  <!-- 紫 Zǐ · 锚点 紫紶 #7D5284 -->
+  <SolidColorBrush x:Key="DqCnZi50" Color="#FCF3FD" />
+  <SolidColorBrush x:Key="DqCnZi100" Color="#ECDBEE" />
+  <SolidColorBrush x:Key="DqCnZi200" Color="#D9BFDD" />
+  <SolidColorBrush x:Key="DqCnZi300" Color="#C5A5CA" />
+  <SolidColorBrush x:Key="DqCnZi400" Color="#B18CB7" />
+  <SolidColorBrush x:Key="DqCnZi500" Color="#9C73A3" />
+  <SolidColorBrush x:Key="DqCnZi600" Color="#7D5284" />
+  <SolidColorBrush x:Key="DqCnZi700" Color="#714778" />
+  <SolidColorBrush x:Key="DqCnZi800" Color="#5A3560" />
+  <SolidColorBrush x:Key="DqCnZi900" Color="#3E2043" />
+  <SolidColorBrush x:Key="DqCnZi950" Color="#250F29" />
+  <!-- 檀 Tán · 锚点 檀色 #B26D5D -->
+  <SolidColorBrush x:Key="DqCnTan50" Color="#FFF4F1" />
+  <SolidColorBrush x:Key="DqCnTan100" Color="#F9D9D1" />
+  <SolidColorBrush x:Key="DqCnTan200" Color="#ECBDB1" />
+  <SolidColorBrush x:Key="DqCnTan300" Color="#DCA193" />
+  <SolidColorBrush x:Key="DqCnTan400" Color="#CA8778" />
+  <SolidColorBrush x:Key="DqCnTan500" Color="#B26D5D" />
+  <SolidColorBrush x:Key="DqCnTan600" Color="#9C5A4B" />
+  <SolidColorBrush x:Key="DqCnTan700" Color="#82473A" />
+  <SolidColorBrush x:Key="DqCnTan800" Color="#683529" />
+  <SolidColorBrush x:Key="DqCnTan900" Color="#492017" />
+  <SolidColorBrush x:Key="DqCnTan950" Color="#2D0F09" />
+  <!-- 品牌 群青 Qún Qīng：沉静理性，蓝为通用商务与工具类首选，久看不躁 -->
+  <SolidColorBrush x:Key="DqBrandSwatchQing" Color="#2E59A7" />
+  <!-- 品牌 银朱 Yín Zhū：中式印记感最强，朱批朱印由此而来 -->
+  <SolidColorBrush x:Key="DqBrandSwatchZhu" Color="#D12920" />
+  <!-- 品牌 青黛 Qīng Dài：冷紫灰，低饱和的克制表达，适合长文与专业场景 -->
+  <SolidColorBrush x:Key="DqBrandSwatchDai" Color="#45465E" />
+  <!-- 品牌 檀色 Tán Sè：温厚赭褐，纸墨之外的旧物感，在地性强 -->
+  <SolidColorBrush x:Key="DqBrandSwatchTan" Color="#B26D5D" />
+  <ResourceDictionary.ThemeDictionaries>
+    <ResourceDictionary x:Key="Light">
+      <SolidColorBrush x:Key="DqBgCanvas" Color="#E4E1D8" />
+      <SolidColorBrush x:Key="DqBgBase" Color="#F5F2E9" />
+      <SolidColorBrush x:Key="DqBgSunken" Color="#CCC9C1" />
+      <SolidColorBrush x:Key="DqBgInverse" Color="#1E2732" />
+      <SolidColorBrush x:Key="DqSurfaceDefault" Color="#FFFFFF" />
+      <SolidColorBrush x:Key="DqSurfaceRaised" Color="#FFFFFF" />
+      <SolidColorBrush x:Key="DqSurfaceOverlay" Color="#FFFFFF" />
+      <SolidColorBrush x:Key="DqSurfaceSunken" Color="#E4E1D8" />
+      <SolidColorBrush x:Key="DqSurfaceVariant" Color="#CCC9C1" />
+      <SolidColorBrush x:Key="DqSurfaceInverse" Color="#3D4652" />
+      <SolidColorBrush x:Key="DqBorderSubtle" Color="#141E2732" />
+      <SolidColorBrush x:Key="DqBorderDefault" Color="#241E2732" />
+      <SolidColorBrush x:Key="DqBorderStrong" Color="#471E2732" />
+      <SolidColorBrush x:Key="DqBorderInverse" Color="#3DFFFFFF" />
+      <SolidColorBrush x:Key="DqTextPrimary" Color="#1E2732" />
+      <SolidColorBrush x:Key="DqTextSecondary" Color="#AD1E2732" />
+      <SolidColorBrush x:Key="DqTextTertiary" Color="#8C1E2732" />
+      <SolidColorBrush x:Key="DqTextDisabled" Color="#571E2732" />
+      <SolidColorBrush x:Key="DqTextInverse" Color="#F5F2E9" />
+      <SolidColorBrush x:Key="DqAccentDefault" Color="#7D5284" />
+      <SolidColorBrush x:Key="DqAccentSubtle" Color="#ECDBEE" />
+      <SolidColorBrush x:Key="DqAccentBorder" Color="#7D5284" />
+      <SolidColorBrush x:Key="DqAccentText" Color="#7D5284" />
+      <SolidColorBrush x:Key="DqAccentOn" Color="#FFFFFF" />
+      <SolidColorBrush x:Key="DqSuccessDefault" Color="#2A6E3F" />
+      <SolidColorBrush x:Key="DqSuccessSubtle" Color="#D2E8D6" />
+      <SolidColorBrush x:Key="DqSuccessBorder" Color="#2A6E3F" />
+      <SolidColorBrush x:Key="DqSuccessText" Color="#2A6E3F" />
+      <SolidColorBrush x:Key="DqSuccessOn" Color="#FFFFFF" />
+      <SolidColorBrush x:Key="DqWarningDefault" Color="#C67915" />
+      <SolidColorBrush x:Key="DqWarningSubtle" Color="#FEDAB8" />
+      <SolidColorBrush x:Key="DqWarningBorder" Color="#C67915" />
+      <SolidColorBrush x:Key="DqWarningText" Color="#814B00" />
+      <SolidColorBrush x:Key="DqWarningOn" Color="#0E1116" />
+      <SolidColorBrush x:Key="DqDangerDefault" Color="#8F1D22" />
+      <SolidColorBrush x:Key="DqDangerSubtle" Color="#FFD6D2" />
+      <SolidColorBrush x:Key="DqDangerBorder" Color="#8F1D22" />
+      <SolidColorBrush x:Key="DqDangerText" Color="#8F1D22" />
+      <SolidColorBrush x:Key="DqDangerOn" Color="#FFFFFF" />
+      <SolidColorBrush x:Key="DqInfoDefault" Color="#3D8E86" />
+      <SolidColorBrush x:Key="DqInfoSubtle" Color="#CBE9E4" />
+      <SolidColorBrush x:Key="DqInfoBorder" Color="#3D8E86" />
+      <SolidColorBrush x:Key="DqInfoText" Color="#186760" />
+      <SolidColorBrush x:Key="DqInfoOn" Color="#0E1116" />
+      <SolidColorBrush x:Key="DqStateHover" Color="#0A1E2732" />
+      <SolidColorBrush x:Key="DqStatePressed" Color="#141E2732" />
+      <SolidColorBrush x:Key="DqStateSelected" Color="#1F1E2732" />
+      <SolidColorBrush x:Key="DqStateDrag" Color="#291E2732" />
+      <SolidColorBrush x:Key="DqStateDisabled" Color="#0D1E2732" />
+      <SolidColorBrush x:Key="DqOverlayScrim" Color="#7314171C" />
+      <SolidColorBrush x:Key="DqOverlayScrimStrong" Color="#AD14171C" />
+      <SolidColorBrush x:Key="DqOverlayGlass" Color="#B8FFFFFF" />
+      <SolidColorBrush x:Key="DqFocusOffset" Color="#FFFFFF" />
+      <SolidColorBrush x:Key="DqSkeletonBase" Color="#121E2732" />
+      <SolidColorBrush x:Key="DqSkeletonSheen" Color="#081E2732" />
+      <SolidColorBrush x:Key="DqChartC1" Color="#2E59A7" />
+      <SolidColorBrush x:Key="DqChartC2" Color="#3D8E86" />
+      <SolidColorBrush x:Key="DqChartC3" Color="#2A6E3F" />
+      <SolidColorBrush x:Key="DqChartC4" Color="#A9862E" />
+      <SolidColorBrush x:Key="DqChartC5" Color="#C67915" />
+      <SolidColorBrush x:Key="DqChartC6" Color="#D12920" />
+      <SolidColorBrush x:Key="DqChartC7" Color="#B83570" />
+      <SolidColorBrush x:Key="DqChartC8" Color="#7D5284" />
+      <SolidColorBrush x:Key="DqChartC9" Color="#B26D5D" />
+      <SolidColorBrush x:Key="DqChartC10" Color="#945635" />
+      <SolidColorBrush x:Key="DqChartGrid" Color="#1A1E2732" />
+      <SolidColorBrush x:Key="DqChartAxis" Color="#731E2732" />
+      <SolidColorBrush x:Key="DqChartLabel" Color="#AD1E2732" />
+      <SolidColorBrush x:Key="DqChartPositive" Color="#2A6E3F" />
+      <SolidColorBrush x:Key="DqChartNegative" Color="#8F1D22" />
+      <SolidColorBrush x:Key="DqChartNeutral" Color="#731E2732" />
+    </ResourceDictionary>
+    <ResourceDictionary x:Key="Dark">
+      <SolidColorBrush x:Key="DqBgCanvas" Color="#101318" />
+      <SolidColorBrush x:Key="DqBgBase" Color="#14171C" />
+      <SolidColorBrush x:Key="DqBgSunken" Color="#0E1116" />
+      <SolidColorBrush x:Key="DqBgInverse" Color="#F5F2E9" />
+      <SolidColorBrush x:Key="DqSurfaceDefault" Color="#1E2732" />
+      <SolidColorBrush x:Key="DqSurfaceRaised" Color="#3D4652" />
+      <SolidColorBrush x:Key="DqSurfaceOverlay" Color="#3D4652" />
+      <SolidColorBrush x:Key="DqSurfaceSunken" Color="#0E1116" />
+      <SolidColorBrush x:Key="DqSurfaceVariant" Color="#3D4652" />
+      <SolidColorBrush x:Key="DqSurfaceInverse" Color="#F5F2E9" />
+      <SolidColorBrush x:Key="DqBorderSubtle" Color="#17D4E5EF" />
+      <SolidColorBrush x:Key="DqBorderDefault" Color="#29D4E5EF" />
+      <SolidColorBrush x:Key="DqBorderStrong" Color="#4CD4E5EF" />
+      <SolidColorBrush x:Key="DqBorderInverse" Color="#3D1E2732" />
+      <SolidColorBrush x:Key="DqTextPrimary" Color="#F5F2E9" />
+      <SolidColorBrush x:Key="DqTextSecondary" Color="#B8D4E5EF" />
+      <SolidColorBrush x:Key="DqTextTertiary" Color="#8FD4E5EF" />
+      <SolidColorBrush x:Key="DqTextDisabled" Color="#66D4E5EF" />
+      <SolidColorBrush x:Key="DqTextInverse" Color="#1E2732" />
+      <SolidColorBrush x:Key="DqAccentDefault" Color="#9C73A3" />
+      <SolidColorBrush x:Key="DqAccentSubtle" Color="#3E2043" />
+      <SolidColorBrush x:Key="DqAccentBorder" Color="#9C73A3" />
+      <SolidColorBrush x:Key="DqAccentText" Color="#B18CB7" />
+      <SolidColorBrush x:Key="DqAccentOn" Color="#0E1116" />
+      <SolidColorBrush x:Key="DqSuccessDefault" Color="#3E7F50" />
+      <SolidColorBrush x:Key="DqSuccessSubtle" Color="#003917" />
+      <SolidColorBrush x:Key="DqSuccessBorder" Color="#3E7F50" />
+      <SolidColorBrush x:Key="DqSuccessText" Color="#75A981" />
+      <SolidColorBrush x:Key="DqSuccessOn" Color="#FFFFFF" />
+      <SolidColorBrush x:Key="DqWarningDefault" Color="#C67915" />
+      <SolidColorBrush x:Key="DqWarningSubtle" Color="#442500" />
+      <SolidColorBrush x:Key="DqWarningBorder" Color="#C67915" />
+      <SolidColorBrush x:Key="DqWarningText" Color="#D38731" />
+      <SolidColorBrush x:Key="DqWarningOn" Color="#0E1116" />
+      <SolidColorBrush x:Key="DqDangerDefault" Color="#B14745" />
+      <SolidColorBrush x:Key="DqDangerSubtle" Color="#5C000A" />
+      <SolidColorBrush x:Key="DqDangerBorder" Color="#B14745" />
+      <SolidColorBrush x:Key="DqDangerText" Color="#D77E78" />
+      <SolidColorBrush x:Key="DqDangerOn" Color="#FFFFFF" />
+      <SolidColorBrush x:Key="DqInfoDefault" Color="#3D8E86" />
+      <SolidColorBrush x:Key="DqInfoSubtle" Color="#003632" />
+      <SolidColorBrush x:Key="DqInfoBorder" Color="#3D8E86" />
+      <SolidColorBrush x:Key="DqInfoText" Color="#63AAA2" />
+      <SolidColorBrush x:Key="DqInfoOn" Color="#0E1116" />
+      <SolidColorBrush x:Key="DqStateHover" Color="#0FD4E5EF" />
+      <SolidColorBrush x:Key="DqStatePressed" Color="#1AD4E5EF" />
+      <SolidColorBrush x:Key="DqStateSelected" Color="#24D4E5EF" />
+      <SolidColorBrush x:Key="DqStateDrag" Color="#2ED4E5EF" />
+      <SolidColorBrush x:Key="DqStateDisabled" Color="#0FD4E5EF" />
+      <SolidColorBrush x:Key="DqOverlayScrim" Color="#9E000000" />
+      <SolidColorBrush x:Key="DqOverlayScrimStrong" Color="#C7000000" />
+      <SolidColorBrush x:Key="DqOverlayGlass" Color="#B814171C" />
+      <SolidColorBrush x:Key="DqFocusOffset" Color="#14171C" />
+      <SolidColorBrush x:Key="DqSkeletonBase" Color="#17D4E5EF" />
+      <SolidColorBrush x:Key="DqSkeletonSheen" Color="#0AD4E5EF" />
+      <SolidColorBrush x:Key="DqChartC1" Color="#6B8FD4" />
+      <SolidColorBrush x:Key="DqChartC2" Color="#4FB3A6" />
+      <SolidColorBrush x:Key="DqChartC3" Color="#4E9C63" />
+      <SolidColorBrush x:Key="DqChartC4" Color="#D4B36A" />
+      <SolidColorBrush x:Key="DqChartC5" Color="#DE9A45" />
+      <SolidColorBrush x:Key="DqChartC6" Color="#E4665C" />
+      <SolidColorBrush x:Key="DqChartC7" Color="#D9739E" />
+      <SolidColorBrush x:Key="DqChartC8" Color="#A98BC0" />
+      <SolidColorBrush x:Key="DqChartC9" Color="#D69A86" />
+      <SolidColorBrush x:Key="DqChartC10" Color="#C08A6B" />
+      <SolidColorBrush x:Key="DqChartGrid" Color="#1FD4E5EF" />
+      <SolidColorBrush x:Key="DqChartAxis" Color="#73D4E5EF" />
+      <SolidColorBrush x:Key="DqChartLabel" Color="#B8D4E5EF" />
+      <SolidColorBrush x:Key="DqChartPositive" Color="#75A981" />
+      <SolidColorBrush x:Key="DqChartNegative" Color="#D77E78" />
+      <SolidColorBrush x:Key="DqChartNeutral" Color="#73D4E5EF" />
+    </ResourceDictionary>
+  </ResourceDictionary.ThemeDictionaries>
+  <!-- tier3 扩展 ext.reading：领域扩展示例：长文阅读场景。核心系统不含任何阅读概念，按需引入本扩展。 -->
+  <!-- 素笺 Sù Jiān · 宣纸暖白 · 默认 -->
+  <SolidColorBrush x:Key="DqReadingPaperBg" Color="#F5F2E9" />
+  <SolidColorBrush x:Key="DqReadingPaperText" Color="#31322C" />
+  <SolidColorBrush x:Key="DqReadingPaperSub" Color="#6B6A5E" />
+  <SolidColorBrush x:Key="DqReadingPaperWidget" Color="#1A31322C" />
+  <!-- 缟 Gǎo · 缟素纯白 · 强光环境 -->
+  <SolidColorBrush x:Key="DqReadingWhiteBg" Color="#EFEFEC" />
+  <SolidColorBrush x:Key="DqReadingWhiteText" Color="#1E2732" />
+  <SolidColorBrush x:Key="DqReadingWhiteSub" Color="#5C6470" />
+  <SolidColorBrush x:Key="DqReadingWhiteWidget" Color="#1A1E2732" />
+  <!-- 天缥 Tiān Piǎo · 天缥护眼青 · 长时间阅读 -->
+  <SolidColorBrush x:Key="DqReadingGreenBg" Color="#D5EBE1" />
+  <SolidColorBrush x:Key="DqReadingGreenText" Color="#13393E" />
+  <SolidColorBrush x:Key="DqReadingGreenSub" Color="#3F5F5D" />
+  <SolidColorBrush x:Key="DqReadingGreenWidget" Color="#1F13393E" />
+  <!-- 夜 Yè · 墨夜 · 暗环境 -->
+  <SolidColorBrush x:Key="DqReadingNightBg" Color="#1E2732" />
+  <SolidColorBrush x:Key="DqReadingNightText" Color="#D4E5EF" />
+  <SolidColorBrush x:Key="DqReadingNightSub" Color="#93A6B4" />
+  <SolidColorBrush x:Key="DqReadingNightWidget" Color="#24D4E5EF" />
+  <x:Double x:Key="DqReadingSizeMin">14</x:Double>
+  <x:Double x:Key="DqReadingSizeMax">36</x:Double>
+  <x:Double x:Key="DqReadingSizeDefault">19</x:Double>
+  <x:Double x:Key="DqReadingMeasureNarrow">560</x:Double>
+  <x:Double x:Key="DqReadingMeasureDefault">640</x:Double>
+  <x:Double x:Key="DqReadingMeasureWide">720</x:Double>
+  <x:Double x:Key="DqReadingLineHeightTight">1.5</x:Double>
+  <x:Double x:Key="DqReadingLineHeightNormal">1.75</x:Double>
+  <x:Double x:Key="DqReadingLineHeightLoose">2.0</x:Double>
+  <x:Double x:Key="DqReadingIndentNone">0</x:Double>
+  <x:Double x:Key="DqReadingIndentHalf">0.5</x:Double>
+  <x:Double x:Key="DqReadingIndentFull">1.0</x:Double>
+  <!-- 思源黑体 Noto Sans SC / Inter -->
+  <FontFamily x:Key="DqFontFamilyUi">"Inter","Noto Sans SC","Source Han Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif</FontFamily>
+  <!-- 思源宋体 Noto Serif SC / Source Serif 4 -->
+  <FontFamily x:Key="DqFontFamilySerif">"Source Serif 4","Noto Serif SC","Source Han Serif SC","Songti SC","SimSun",Georgia,serif</FontFamily>
+  <!-- 等宽 / JetBrains Mono -->
+  <FontFamily x:Key="DqFontFamilyMono">"JetBrains Mono","SFMono-Regular",Consolas,monospace</FontFamily>
+  <!-- 等宽数字 / Inter Tabular -->
+  <FontFamily x:Key="DqFontFamilyNumber">"Inter","DIN Alternate",system-ui,sans-serif</FontFamily>
+  <x:Double x:Key="DqFontWeightRegular">400</x:Double>
+  <x:Double x:Key="DqFontWeightMedium">500</x:Double>
+  <x:Double x:Key="DqFontWeightSemibold">600</x:Double>
+  <x:Double x:Key="DqFontWeightBold">700</x:Double>
+  <CornerRadius x:Key="DqRadiusNone">0</CornerRadius>
+  <CornerRadius x:Key="DqRadiusXs">4</CornerRadius>
+  <CornerRadius x:Key="DqRadiusSm">8</CornerRadius>
+  <CornerRadius x:Key="DqRadiusMd">12</CornerRadius>
+  <CornerRadius x:Key="DqRadiusLg">16</CornerRadius>
+  <CornerRadius x:Key="DqRadiusXl">20</CornerRadius>
+  <CornerRadius x:Key="DqRadius2xl">28</CornerRadius>
+  <CornerRadius x:Key="DqRadiusPill">999</CornerRadius>
+  <x:Double x:Key="DqSpace0">0</x:Double>
+  <x:Double x:Key="DqSpace1">4</x:Double>
+  <x:Double x:Key="DqSpace2">8</x:Double>
+  <x:Double x:Key="DqSpace3">12</x:Double>
+  <x:Double x:Key="DqSpace4">16</x:Double>
+  <x:Double x:Key="DqSpace5">20</x:Double>
+  <x:Double x:Key="DqSpace6">24</x:Double>
+  <x:Double x:Key="DqSpace8">32</x:Double>
+  <x:Double x:Key="DqSpace10">40</x:Double>
+  <x:Double x:Key="DqSpace12">48</x:Double>
+  <x:Double x:Key="DqSpace16">64</x:Double>
+  <x:Double x:Key="DqSpace20">80</x:Double>
+  <x:Double x:Key="DqSpace24">96</x:Double>
+  <x:Double x:Key="DqBorderWidthNone">0</x:Double>
+  <x:Double x:Key="DqBorderWidthHairline">1</x:Double>
+  <x:Double x:Key="DqBorderWidthThick">2</x:Double>
+  <x:Double x:Key="DqBorderWidthHeavy">4</x:Double>
+  <x:Double x:Key="DqFontSizeCaption">12</x:Double>
+  <x:Double x:Key="DqFontSizeBodySm">13</x:Double>
+  <x:Double x:Key="DqFontSizeBody">14</x:Double>
+  <x:Double x:Key="DqFontSizeBodyLg">16</x:Double>
+  <x:Double x:Key="DqFontSizeTitleSm">18</x:Double>
+  <x:Double x:Key="DqFontSizeTitle">22</x:Double>
+  <x:Double x:Key="DqFontSizeTitleLg">28</x:Double>
+  <x:Double x:Key="DqFontSizeDisplay">38</x:Double>
+  <x:Double x:Key="DqOpacityDisabled">0.38</x:Double>
+  <x:Double x:Key="DqOpacityMuted">0.6</x:Double>
+  <x:Double x:Key="DqOpacityFull">1</x:Double>
+  <x:Double x:Key="DqIconXs">12</x:Double>
+  <x:Double x:Key="DqIconSm">16</x:Double>
+  <x:Double x:Key="DqIconMd">20</x:Double>
+  <x:Double x:Key="DqIconLg">24</x:Double>
+  <x:Double x:Key="DqIconXl">32</x:Double>
+  <x:Double x:Key="DqIcon2xl">40</x:Double>
+  <x:Double x:Key="DqTouchMin">44</x:Double>
+  <x:Double x:Key="DqContainerProse">640</x:Double>
+</ResourceDictionary>

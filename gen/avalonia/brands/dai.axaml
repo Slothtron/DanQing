@@ -1,0 +1,69 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!-- 丹青 · 品牌 overlay「青黛 Qīng Dài」（生成物，勿手改） -->
+  <!-- 冷紫灰，低饱和的克制表达，适合长文与专业场景 -->
+  <!-- 适用：阅读、写作、设计工具、专业软件 -->
+  <!-- 须与 Tokens.axaml 基座一起合并，且一次只合并一支 -->
+  <ResourceDictionary.ThemeDictionaries>
+    <ResourceDictionary x:Key="Light">
+      <SolidColorBrush x:Key="DqTextLink" Color="#45465E" />
+      <SolidColorBrush x:Key="DqPrimaryDefault" Color="#45465E" />
+      <SolidColorBrush x:Key="DqPrimaryHover" Color="#2B2C40" />
+      <SolidColorBrush x:Key="DqPrimaryActive" Color="#171827" />
+      <SolidColorBrush x:Key="DqPrimarySubtle" Color="#E0E0EA" />
+      <SolidColorBrush x:Key="DqPrimaryBorder" Color="#45465E" />
+      <SolidColorBrush x:Key="DqPrimaryText" Color="#45465E" />
+      <SolidColorBrush x:Key="DqPrimaryOn" Color="#FFFFFF" />
+      <SolidColorBrush x:Key="DqFocusRing" Color="#45465E" />
+      <!-- FluentTheme 兼容：原生控件（ToggleSwitch / ComboBox / 焦点环等）跟随品牌 -->
+      <!-- Fluent 要的是「1 基色 + Light1..3 + Dark1..3」的渐层，丹青给的是语义 7 角色，形状不同；此处按混合比例派生近似值 -->
+      <Color x:Key="SystemAccentColor">#45465E</Color>
+      <Color x:Key="SystemAccentColorLight1">#616276</Color>
+      <Color x:Key="SystemAccentColorLight2">#7D7E8E</Color>
+      <Color x:Key="SystemAccentColorLight3">#9999A6</Color>
+      <Color x:Key="SystemAccentColorDark1">#3B3C50</Color>
+      <Color x:Key="SystemAccentColorDark2">#303142</Color>
+      <Color x:Key="SystemAccentColorDark3">#262734</Color>
+      <SolidColorBrush x:Key="AccentFillColorDefaultBrush" Color="#45465E" />
+      <SolidColorBrush x:Key="AccentFillColorSecondaryBrush" Color="#DD45465E" />
+      <SolidColorBrush x:Key="AccentFillColorTertiaryBrush" Color="#8045465E" />
+      <SolidColorBrush x:Key="AccentFillColorDisabledBrush" Color="#E0E0EA" />
+      <SolidColorBrush x:Key="AccentTextFillColorPrimaryBrush" Color="#45465E" />
+      <SolidColorBrush x:Key="AccentTextFillColorSecondaryBrush" Color="#45465E" />
+      <SolidColorBrush x:Key="AccentTextFillColorTertiaryBrush" Color="#747486" />
+      <SolidColorBrush x:Key="TextOnAccentFillColorPrimaryBrush" Color="#FFFFFF" />
+      <SolidColorBrush x:Key="TextOnAccentFillColorSecondaryBrush" Color="#E6FFFFFF" />
+      <SolidColorBrush x:Key="TextOnAccentFillColorDisabledBrush" Color="#66FFFFFF" />
+    </ResourceDictionary>
+    <ResourceDictionary x:Key="Dark">
+      <SolidColorBrush x:Key="DqTextLink" Color="#9899AD" />
+      <SolidColorBrush x:Key="DqPrimaryDefault" Color="#6B6C84" />
+      <SolidColorBrush x:Key="DqPrimaryHover" Color="#818298" />
+      <SolidColorBrush x:Key="DqPrimaryActive" Color="#9899AD" />
+      <SolidColorBrush x:Key="DqPrimarySubtle" Color="#2B2C40" />
+      <SolidColorBrush x:Key="DqPrimaryBorder" Color="#6B6C84" />
+      <SolidColorBrush x:Key="DqPrimaryText" Color="#9899AD" />
+      <SolidColorBrush x:Key="DqPrimaryOn" Color="#FFFFFF" />
+      <SolidColorBrush x:Key="DqFocusRing" Color="#6B6C84" />
+      <!-- FluentTheme 兼容：原生控件（ToggleSwitch / ComboBox / 焦点环等）跟随品牌 -->
+      <!-- Fluent 要的是「1 基色 + Light1..3 + Dark1..3」的渐层，丹青给的是语义 7 角色，形状不同；此处按混合比例派生近似值 -->
+      <Color x:Key="SystemAccentColor">#6B6C84</Color>
+      <Color x:Key="SystemAccentColorLight1">#818296</Color>
+      <Color x:Key="SystemAccentColorLight2">#9798A9</Color>
+      <Color x:Key="SystemAccentColorLight3">#AEAEBB</Color>
+      <Color x:Key="SystemAccentColorDark1">#5B5C70</Color>
+      <Color x:Key="SystemAccentColorDark2">#4B4C5C</Color>
+      <Color x:Key="SystemAccentColorDark3">#3B3B49</Color>
+      <SolidColorBrush x:Key="AccentFillColorDefaultBrush" Color="#6B6C84" />
+      <SolidColorBrush x:Key="AccentFillColorSecondaryBrush" Color="#DD6B6C84" />
+      <SolidColorBrush x:Key="AccentFillColorTertiaryBrush" Color="#806B6C84" />
+      <SolidColorBrush x:Key="AccentFillColorDisabledBrush" Color="#2B2C40" />
+      <SolidColorBrush x:Key="AccentTextFillColorPrimaryBrush" Color="#9899AD" />
+      <SolidColorBrush x:Key="AccentTextFillColorSecondaryBrush" Color="#9899AD" />
+      <SolidColorBrush x:Key="AccentTextFillColorTertiaryBrush" Color="#9091A3" />
+      <SolidColorBrush x:Key="TextOnAccentFillColorPrimaryBrush" Color="#FFFFFF" />
+      <SolidColorBrush x:Key="TextOnAccentFillColorSecondaryBrush" Color="#E6FFFFFF" />
+      <SolidColorBrush x:Key="TextOnAccentFillColorDisabledBrush" Color="#66FFFFFF" />
+    </ResourceDictionary>
+  </ResourceDictionary.ThemeDictionaries>
+</ResourceDictionary>

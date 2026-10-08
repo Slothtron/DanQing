@@ -1,0 +1,10 @@
+# Rust 构建产物
+/target/
+**/*.rs.bk
+
+# 编辑器 / 系统
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp

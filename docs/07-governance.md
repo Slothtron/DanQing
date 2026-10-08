@@ -49,18 +49,18 @@ jobs:
         run: cargo build --release
       - name: 生成令牌并执行门禁
         run: ./target/release/danqing build
-      - name: 确认生成物已提交（防止有人只改 source 不重跑）
-        run: ./target/release/danqing verify
       - name: 上传报告
         if: always()
         uses: actions/upload-artifact@v4
         with: { name: danqing-reports, path: gen/reports }
 ```
 
-两条命令足以挡住 90% 的回归：
+一条命令足以挡住 90% 的回归：
 
 1. `danqing build` — 生成 + 门禁（含对比度），失败退出码 1
-2. `danqing verify` — 生成物同步（有人改了 `source.json` 却忘了重跑），不同步退出码 1
+
+`danqing verify` 留给本地：改了 `source.json` 却忘了重跑时它会报出产物漂移（退出码 1）。
+CI 上不跑它——`gen/` 不入版本库，新检出的工作区本来就没有产物，跑它只会全量报缺失。
 
 ## 4. 版本策略
 

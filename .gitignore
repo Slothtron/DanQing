@@ -2,6 +2,11 @@
 /target/
 **/*.rs.bk
 
+# 生成物：gen/ 下 15 种端产物全部由 `danqing build` 从真源确定性重建，
+# 不入库。入库的代价是——真源一行改动会被十几个产物的大规模 diff 淹没，
+# review 时反而看不清改了什么。clone / 拉取后跑一次 `danqing build` 即可。
+/gen/
+
 # 编辑器 / 系统
 .vscode/
 .idea/

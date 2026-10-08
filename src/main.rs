@@ -57,12 +57,13 @@ fn print_help() {
         用法：\n\
         \x20 danqing build       生成全部端产物 + 跑对比度门禁（失败退出码 1）\n\
         \x20 danqing check        只跑门禁，不写盘\n\
-        \x20 danqing verify       重新生成并与磁盘上的产物比对（CI 查漂移用）\n\
+        \x20 danqing verify       重新生成并与磁盘上的产物比对，查产物漂移\n\
         \x20 danqing serve        起一个静态服务预览展示页（默认 127.0.0.1:3788）\n\
         \x20 danqing --version\n\
         \n\
         真源：tokens/source.json（人手维护的唯一文件）+ data/chinese-colors.json\n\
-        产物：gen/ 下全部内容，禁止手改。",
+        产物：gen/ 下全部内容，禁止手改，且不入版本库。\n\
+        clone / 拉取后先跑一次 danqing build 即可重建。",
         env!("CARGO_PKG_VERSION")
     );
 }
@@ -118,18 +119,31 @@ fn run(root: &Path, cmd: &str) -> Result<(), String> {
 
     if cmd == "verify" {
         let mut drifted = 0usize;
+        let mut missing = 0usize;
         for (rel, body) in &outputs {
             let path = root.join(rel);
             match std::fs::read_to_string(&path) {
                 Ok(existing) if normalize(&existing) == normalize(body) => {}
-                _ => {
+                Ok(_) => {
                     drifted += 1;
                     println!("  [DRIFT] {rel}");
                 }
+                Err(_) => {
+                    missing += 1;
+                    println!("  [MISSING] {rel}");
+                }
             }
         }
-        if drifted > 0 {
-            println!("[fail] {drifted} 个产物与真源不同步，请本地跑 `danqing build` 后提交");
+        // gen/ 不入版本库，所以「gen/ 整个不存在」是刚 clone 下来的正常状态，
+        // 不是漂移——分开报，否则新人会被一堆 MISSING 误导成「真源坏了」。
+        if !root.join("gen").is_dir() && !outputs.is_empty() {
+            println!("[fail] gen/ 不存在 —— 这是新检出的工作区，请先跑 `danqing build`");
+            std::process::exit(1);
+        }
+        if drifted + missing > 0 {
+            println!(
+                "[fail] {drifted} 个产物漂移 / {missing} 个缺失，请本地跑 `danqing build` 后提交"
+            );
             std::process::exit(1);
         }
         println!("[ok] {} 个产物均与真源同步", outputs.len());

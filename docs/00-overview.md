@@ -94,7 +94,7 @@ danqing/
 ├─ Cargo.toml                  ← Rust 工程清单
 ├─ src/                        ← 生成器 + 门禁（编译成单个二进制 `danqing`）
 ├─ data/chinese-colors.json    ← 386 条传统色原始数据
-├─ gen/                        ← 15 种端产物（生成，勿手改）
+├─ gen/                        ← 15 种端产物（生成，勿手改，**不入 git**）
 │  ├─ css/danqing.css          gen/scss/_danqing.scss
 │  ├─ ts/danqing.ts            gen/json/danqing.tokens.json  (DTCG)
 │  ├─ tailwind/danqing.preset.cjs
@@ -103,8 +103,7 @@ danqing/
 │  ├─ android/{colors,dimens}.xml
 │  └─ reports/{ramp,contrast,tokens-summary}.md
 ├─ docs/                       ← 本目录
-├─ showcase/index.html         ← 可视化展示
-└─ reference/koodo/            ← 第三方参考，不进入系统
+└─ showcase/index.html         ← 可视化展示
 ```
 
 ## 6. 下一步

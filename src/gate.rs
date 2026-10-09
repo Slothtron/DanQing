@@ -83,6 +83,27 @@ pub fn run_gates(pipeline: &Pipeline, _families: &[Family], _steps: &[i64]) -> V
         }
     }
 
+    // 终端主题：正文/光标/选区各一项，外加 16 个 ANSI 槽位对底色。
+    //
+    // 与底色同侧的中性槽位由真源 `terminal.backgroundSideNeutrals` 声明豁免——
+    // 它们在明主题里就是「纸本身」、暗主题里就是「墨本身」，要求它们与底色拉开
+    // 对比是自相矛盾的要求。其余槽位一律 ≥3.0，因为它们都要当正文用。
+    for scheme in crate::terminal::schemes(pipeline) {
+        let lbl = |what: &str| format!("{} {} · {what}", scheme.mode_name, scheme.brand_name);
+        need!(lbl("正文 / 底色"), scheme.foreground.clone(), scheme.background.clone(), 4.5, "终端");
+        need!(lbl("光标 / 底色"), scheme.cursor_color.clone(), scheme.background.clone(), 3.0, "终端");
+        need!(lbl("正文 / 选区"), scheme.foreground.clone(), scheme.selection_background.clone(), 4.5, "终端");
+        for (slot, hexv) in scheme.gated_slots() {
+            need!(
+                format!("{} {} · {slot} / 底色", scheme.mode_name, scheme.brand_name),
+                hexv.clone(),
+                scheme.background.clone(),
+                3.0,
+                "终端"
+            );
+        }
+    }
+
     if let Some(ext) = pipeline.source.get("extensions").and_then(Value::as_object).and_then(|e| e.get("reading")) {
         for paper in ext["papers"].as_array().unwrap() {
             let name = paper["name"].as_str().unwrap();

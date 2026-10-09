@@ -8,7 +8,7 @@
 2. **160 个语义令牌** —— 80 个通用语义角色 × 浅色/深色两套，覆盖背景、表面、描边、文字、主色、五个状态色、交互态、浮层、焦点、骨架屏、数据可视化。
 3. **66 组尺度令牌** —— 间距、圆角、描边、图标、触控、容器、阴影层级、字号阶梯、字重、字距、动效、断点。
 
-以及把这些令牌变成**任何技术栈可直接消费的产物**的生成器（15 种输出）与**可执行的对比度门禁**（108 项）。
+以及把这些令牌落成**一份现成配色**的生成器（Windows Terminal，4 品牌 × 明暗 = 8 套）与**可执行的对比度门禁**（248 项）。
 
 ## 2. 这个系统不是什么
 
@@ -62,27 +62,33 @@
 
 当产品决定换品牌主色时，第一、二种写法需要全局搜索替换，第三种写法只需改 `<html data-brand="zhu">`。
 
-### 4.2 按目录接入
+### 4.2 终端配色
 
-| 技术栈 | 引入方式 |
-|---|---|
-| Web / HTML | `<link>` 引入 `gen/css/danqing.css`，用 `data-theme` / `data-brand` 切换 |
-| React / Vue / Svelte | 同上（CSS 自定义属性天然可用），或 `import` `gen/ts/danqing.ts` 取字面量 |
-| Sass | `@use "gen/scss/danqing"` 取 map 与 `dq-color()` |
-| Tailwind | `presets: [require("./gen/tailwind/danqing.preset.cjs")]` |
-| DTCG 工具链 | `gen/json/danqing.tokens.json`，可被 Style Dictionary / Figma Tokens 直接读 |
-| Avalonia | 合并 `gen/avalonia/Tokens.axaml` |
-| SwiftUI | 把 `gen/swift/DesignTokens.swift` 加入 target；建议同时导出为 `Assets.xcassets` 颜色集 |
-| Jetpack Compose | 复制 `gen/compose/DesignTokens.kt`，用它构造自定义 `ColorScheme` |
-| Flutter | 复制 `gen/flutter/design_tokens.dart` |
-| Android XML | `gen/android/colors.xml` + `dimens.xml` |
+仓库里唯一现成可用的产物是 Windows Terminal 配色：
 
-### 4.3 扩展自己的领域
+```jsonc
+// settings.json —— 粘贴 themes/windows-terminal/danqing.schemes.json 的 schemes 数组
+"profiles": { "defaults": { "colorScheme": "丹青 · 墨 · 群青" } }
+```
+
+8 套方案、16 个 ANSI 槽位怎么选色、门禁怎么查，见 [`06-terminal-theming.md`](./06-terminal-theming.md)。
+
+### 4.3 其他端：从语义层自行派生
+
+丹青**不生成** CSS / SwiftUI / Compose / Flutter / Android 这类平台样式代码。那属于各端工程
+自己的事——生成器一旦开始猜某个框架的命名习惯与主题机制，就会变成十几个需要跟着上游版本
+维护的半成品。各端要做的是同一件事：**把 `sys.*` 的 80 个语义角色 × 2 模式读进自己的主题
+对象**，然后只在组件里引用语义。
+
+各端拿到的令牌值，就是 `tokens/danqing.tokens.json` 这份已解析快照（`danqing build` 产出）。
+`data-brand` / `data-theme` 这类开关的实现方式由端点自行决定，不构成跨端契约。
+
+### 4.4 扩展自己的领域
 
 产品的领域概念（阅读、绘图、播放…）不应该污染核心。做法见 [`04-theming.md`](./04-theming.md#4-扩展机制)：
 
 1. 在 `tokens/source.json` 的 `extensions` 下新增一个键；
-2. 在 Rust 生成器 `src/emit/css.rs` 的 `emit_css` 里加一段输出（或在产品侧单独维护一个 `product.tokens.json`）；
+2. 需要一个下拉到具体产物的扩展时，在 `src/emit/` 下加对应的输出模块，并接进 `src/main.rs` 的输出表；
 3. 扩展令牌以 `ext.*` 命名，且必须建立在 `sys.*` 之上。
 
 ## 5. 目录与产物
@@ -94,17 +100,14 @@ danqing/
 ├─ Cargo.toml                  ← Rust 工程清单
 ├─ src/                        ← 生成器 + 门禁（编译成单个二进制 `danqing`）
 ├─ data/chinese-colors.json    ← 386 条传统色原始数据
-├─ gen/                        ← 15 种端产物（生成，勿手改，**不入 git**）
-│  ├─ css/danqing.css          gen/scss/_danqing.scss
-│  ├─ ts/danqing.ts            gen/json/danqing.tokens.json  (DTCG)
-│  ├─ tailwind/danqing.preset.cjs
-│  ├─ avalonia/Tokens.axaml    gen/swift/DesignTokens.swift
-│  ├─ compose/DesignTokens.kt  gen/flutter/design_tokens.dart
-│  ├─ android/{colors,dimens}.xml
-│  └─ reports/{ramp,contrast,tokens-summary}.md
+├─ themes/windows-terminal/    ← Windows Terminal 配色（生成，**入库**，clone 即可用）
+├─ dist/reports/               ← 色阶 / 对比度 / 令牌总览三份报告（生成，**不入 git**）
 ├─ docs/                       ← 本目录
-└─ showcase/index.html         ← 可视化展示
+└─ showcase/index.html         ← 配色参考页（数据来自生成的 showcase/data.js）
 ```
+
+产物只有一份是交付物：终端配色。它**入库**是刻意的——clone 下来就该有现成的东西可用，
+不必先装 Rust 工具链跑一次构建。三份报告与展示页数据是给自己复核用的，不入库。
 
 ## 6. 下一步
 

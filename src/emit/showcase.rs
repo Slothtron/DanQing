@@ -112,6 +112,30 @@ pub fn emit_showcase_data(p: &Pipeline, checks: &[Check]) -> String {
     semantic.insert("light".to_string(), base.sem("light").clone());
     semantic.insert("dark".to_string(), base.sem("dark").clone());
 
+    // 终端配色（品牌 × 模式），供展示页渲染色板预览
+    let terminal_schemes: Vec<Value> = crate::terminal::schemes(p)
+        .iter()
+        .map(|s| {
+            let mut ansi = Map::new();
+            for (slot, hexv) in &s.ansi {
+                ansi.insert(slot.clone(), Value::String(hexv.clone()));
+            }
+            json!({
+                "name": s.name,
+                "brand": s.brand,
+                "brandName": s.brand_name,
+                "mode": s.mode,
+                "modeName": s.mode_name,
+                "background": s.background,
+                "foreground": s.foreground,
+                "cursorColor": s.cursor_color,
+                "selectionBackground": s.selection_background,
+                "ansi": Value::Object(ansi),
+                "exempt": s.exempt,
+            })
+        })
+        .collect();
+
     let data = json!({
         "meta": source["meta"],
         "steps": p.steps,
@@ -121,6 +145,7 @@ pub fn emit_showcase_data(p: &Pipeline, checks: &[Check]) -> String {
         "reserved": source["reservedFamilies"],
         "semantic": semantic,
         "scales": source["scales"],
+        "terminal": terminal_schemes,
         "gates": {
             "total": checks.len(),
             "failed": checks.iter().filter(|c| !c.ok()).count(),

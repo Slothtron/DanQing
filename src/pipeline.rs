@@ -7,7 +7,7 @@
 use serde_json::Value;
 
 use crate::model::{
-    arr, build_families, build_semantic, deref, flat_semantic, obj, s, ChartFix, Entry, Family,
+    arr, build_families, build_semantic, deref, obj, s, ChartFix, Entry, Family,
     PaletteEntry,
 };
 
@@ -40,26 +40,6 @@ impl Pipeline {
             .get("extensions")
             .and_then(Value::as_object)
             .and_then(|e| e.get("reading"))
-    }
-
-    /// 随品牌变化的语义键（扁平名）。
-    ///
-    /// 用「逐品牌与基座求差」而不是写死键名清单，是为了将来在真源里新增一处
-    /// `@brand.*` 引用时能被自动纳入，不必同步改生成器。
-    pub fn brand_varying_keys(&self) -> Vec<String> {
-        let mut varying: Vec<String> = Vec::new();
-        let base = self.base();
-        for entry in &self.entries {
-            for mode in ["light", "dark"] {
-                let reference = flat_semantic(base.sem(mode));
-                for (k, v) in flat_semantic(entry.sem(mode)) {
-                    if !reference.iter().any(|(rk, rv)| rk == &k && rv == &v) && !varying.contains(&k) {
-                        varying.push(k);
-                    }
-                }
-            }
-        }
-        varying
     }
 
     /// 迭代「所有品牌 + 末尾的 `__base__`」，等价于 Python 的 `resolved_all.items()`。

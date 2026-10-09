@@ -104,8 +104,8 @@
 | `chart.negative` | `#8F1D22` | `#C5635E` |
 | `chart.neutral` | `rgba(30,39,50,0.45)` | `rgba(212,229,239,0.45)` |
 
-> 表中的 `primary.*` / `text.link` / `focus.ring` 是**默认品牌（群青）**下的值，会随 `data-brand` 变化。
-> 上表是 `data-brand="qing"` 时的展开；其他品牌见 `gen/reports/ramp-report.md` 的品牌表。
+> 表中的 `primary.*` / `text.link` / `focus.ring` 是**默认品牌（群青）**下的值，会随品牌变化。
+> 上表是群青品牌时的展开；其他品牌见 `dist/reports/ramp-report.md` 的品牌表。
 
 ### 2.1 角色语义说明
 

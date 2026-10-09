@@ -57,32 +57,30 @@
 **不要**用 `filter: invert()` 或 `@media (prefers-color-scheme: dark)` 里翻转浅色值来实现深色主题。
 深色下 `text.primary` 不是「浅色的反相」，而是「素材本身换了」——素与墨是两个色族。
 
-### 2.1 主题切换的实现约定（Web）
+### 2.1 主题与品牌是两个正交的开关
 
-主题与品牌都是 `<html>` 上的属性，不依赖媒体查询：
+主题（素 / 墨）与品牌互不替代，各自独立：
 
 ```html
 <html data-theme="dark" data-brand="dai">
 ```
 
-生成器输出的 CSS 顺序是刻意安排的，直接决定了优先级是否正确：
+约定：`data-theme` 只取 `light` / `dark`，`data-brand` 取品牌 id。不要用 `class="dark"` 这类
+自定义开关，也不要让 `prefers-color-scheme` 直接参与样式计算——系统级偏好应该由应用读取后
+写属性，否则用户手动选的「浅色」会被系统主题覆盖。
+
+Web 上自己铺样式层时，四段覆盖的**书写顺序**决定优先级能否成立：
 
 ```css
 :root { /* 浅色基座 + 默认品牌 */ }
 [data-brand="zhu"] { /* 浅色品牌覆盖 · 特异度 0,1,0 */ }
-[data-theme="dark"] { /* 深色基座 · 特异度 0,1,0，位置在浅色品牌之后 */ }
-[data-theme="dark"][data-brand="zhu"] { /* 深色品牌覆盖 · 特异度 0,2,0 */ }
+[data-theme="dark"] { /* 深色基座 · 0,1,0，必须排在浅色品牌块之后 */ }
+[data-theme="dark"][data-brand="zhu"] { /* 深色品牌覆盖 · 0,2,0 */ }
 ```
 
-三处关键点，改动生成器时必须保留：
-
-1. **深色基座必须排在浅色品牌块之后**，否则 `data-theme="dark"` 下的默认品牌会盖不掉浅色品牌；
-2. **深色品牌块必须用复合选择器** `[data-theme="dark"][data-brand="x"]`，用 0,2,0 的特异度一次性压过前面两块；
-3. 用 `:root` 承载浅色默认值而**不要**用 `@media (prefers-color-scheme: dark)` 自动跟随——
-   系统级偏好应由应用读取后写属性，否则用户手动切「浅色」会被系统主题覆盖。
-
-> 这是本项目实测踩过的坑：早期版本把深浅两套令牌都写进 `:root`，导致浅色默认值被深色覆盖，
-> 表现在界面上就是「浅色主题的正文变成了浅灰」。生成器现在只把浅色写入 `:root`。
+两个点必须成立：深色基座排在浅色品牌块之后，否则 `data-theme="dark"` 下的默认品牌盖不掉
+浅色品牌；深色品牌块用复合选择器，0,2,0 的特异度才能一次性压过前面两块。另外只把浅色
+写进 `:root`——深浅两套令牌都塞进 `:root`，浅色默认值会被深色那套覆盖掉。
 
 ## 3. 响应式与密度
 
@@ -139,7 +137,7 @@
 }
 ```
 
-生成 CSS 使用：
+应用侧消费（`--dq-*` 是应用自己那套变量的命名空间，见 [`01-principles.md`](./01-principles.md#22-令牌-id机器的语言)）：
 
 ```css
 .reader { background: var(--dq-reading-bg); color: var(--dq-reading-text);
@@ -150,7 +148,7 @@
 <article class="reader" data-reading-paper="night" style="--dq-reading-line-height: 1.75">
 ```
 
-四套纸色的正文对比度（`gen/reports/contrast-report.md` 的「扩展」分组）：
+四套纸色的正文对比度（`dist/reports/contrast-report.md` 的「扩展」分组）：
 
 | 纸色 | 底 / 正文 | 正文对比度 | 次要文字 | 次要对比度 |
 |---|---|---|---|---|
@@ -166,7 +164,8 @@
 ### 4.2 如何加自己的扩展
 
 1. 在 `tokens/source.json` → `extensions` 下加一个键（如 `player`）；
-2. 在 Rust 生成器 `src/emit/css.rs` → `emit_css` 的扩展段落里补一段输出（现有 `reading` 段落即模板）；
+2. 不需要下拉到产物就到此为止——扩展令牌与核心令牌一起进快照，应用侧照样能读到；
+   确实要产出某个平台的现成文件时，在 `src/emit/` 下加一个模块并接进 `src/main.rs` 的输出表；
 3. 如果需要新原语色，加到 `families`，但**不要**把它变成保留族或品牌族；
 4. 跑 `danqing build`，门禁会自动覆盖新增部分。
 

@@ -4,22 +4,25 @@
 
 ```
 人手维护                          机器生成（改了会被覆盖）
-─────────────────────────         ────────────────────────────────────
+─────────────────────────         ────────────────────────────────────────────────────
 tokens/source.json       ──┐
-data/chinese-colors.json ──┼──▶  danqing build  ──▶  tokens/danqing.tokens.json（已解析快照）
-                           │                          gen/**（15 种端产物）
-                           │                          gen/reports/**.md（3 份报告）
+data/chinese-colors.json ──┼──▶  danqing build  ──▶  themes/windows-terminal/*.json（8 套配色，**入库**）
+                           │                          tokens/danqing.tokens.json（已解析快照，不入库）
+                           │                          dist/reports/**.md（3 份报告，不入库）
+                           │                          showcase/data.js（参考页数据，不入库）
                            └──▶  退出码 0 = 全部门禁通过
 ```
 
 **唯一人手可改的文件是 `tokens/source.json`**（以及 `data/chinese-colors.json` 这份原始色库）。
 `src/` 下的 Rust 生成器是代码，当然也可以改，但改它意味着改规则，需要走下面的变更流程。
 
-`gen/**`、`tokens/danqing.tokens.json`、`showcase/data.js` 都是构建产物，
-**一律不入版本库**（见 `.gitignore`）。纪律是：
+`themes/windows-terminal/**` 是**入库**的：它是唯一对外交付的现成产物，clone 下来就该直接能用，
+不必先装 Rust 工具链跑一次构建。其余产物（快照、报告、参考页数据）**一律不入版本库**
+（见 `.gitignore`）。纪律是：
 
-- clone / 拉取后先跑一次 `danqing build`，20 个产物一次性重建
-- 改了真源却忘了重跑 → 本地 `danqing verify` 会报出漂移并退出码 1
+- clone / 拉取后跑一次 `danqing build` 重建那几份不入库的产物；终端配色本身已在仓库里
+- 改了真源却忘了重跑 → 本地 `danqing verify` 会报出漂移并退出码 1，终端配色同样会被它抓到
+- CI 上另以 `git diff --exit-code themes/` 守门：入库的产物必须与真源一致
 - **永远不要**为了「先上线」手改产物——下次生成即被覆盖，且这种改动不会进入门禁
 
 ## 2. 变更流程
@@ -30,7 +33,10 @@ data/chinese-colors.json ──┼──▶  danqing build  ──▶  tokens/da
 | 加一个色族 | `source.json` 的 `families` | 同上，并确认新族的锚点是真实传统色原值（可从 `data/chinese-colors.json` 反查） |
 | 加一个品牌 | `source.json` 的 `brands` | 确认 `family` 不是保留族；跑生成器；确认冲突检测为空 |
 | 加一个语义角色 | `source.json` 的 `semantic.light` **和** `semantic.dark` | 两套模式必须同时给出；加入 `run_gates` 的检查项 |
-| 加一个扩展 | `source.json` 的 `extensions` + `src/emit/` 下对应端的 emit 段 | 确认不引入扩展时核心仍完整可用 |
+| 加一个扩展 | `source.json` 的 `extensions` +（若要下拉到产物）`src/emit/` 下对应模块 | 确认不引入扩展时核心仍完整可用 |
+| 改终端某个槽位的色阶 | `source.json` 的 `terminal.palette.{mode}.{slot}` | 跑生成器；门禁会立刻告诉你新色阶与底色的对比是否还够 |
+| 改终端 chrome 取哪个令牌 | `source.json` 的 `terminal.chrome` | 值写 `sys.<角色>[.<键>]`；跑生成器确认门禁 |
+| 加一套终端模式 | `source.json` 的 `terminal.modes` / `palette` / `backgroundSideNeutrals` 三处 | 三处必须同时补齐，否则生成器会明确指出缺哪一个 |
 | 改算法（色阶/回退/门禁） | `src/model.rs` / `src/gate.rs` | 需要在 PR 里给出**前后对比**：121 个原语的 diff 摘要 + 门禁项数变化 + 是否出现新的紧项 |
 | 改尺度令牌 | `source.json` 的 `scales` | 尺度变更属于破坏性变更，需全端同步并升 major |
 
@@ -50,18 +56,21 @@ jobs:
         run: cargo build --release
       - name: 生成令牌并执行门禁
         run: ./target/release/danqing build
+      - name: 入库产物必须与真源一致
+        run: git diff --exit-code themes/
       - name: 上传报告
         if: always()
         uses: actions/upload-artifact@v4
-        with: { name: danqing-reports, path: gen/reports }
+        with: { name: danqing-reports, path: dist/reports }
 ```
 
-一条命令足以挡住 90% 的回归：
+两条命令足以挡住 90% 的回归：
 
-1. `danqing build` — 生成 + 门禁（含对比度），失败退出码 1
+1. `danqing build` — 生成 + 门禁（含对比度与终端配色），失败退出码 1
+2. `git diff --exit-code themes/` — 终端配色入库，因此「改了真源没重跑」在 CI 上是可见的 diff
 
 `danqing verify` 留给本地：改了 `source.json` 却忘了重跑时它会报出产物漂移（退出码 1）。
-CI 上不跑它——`gen/` 不入版本库，新检出的工作区本来就没有产物，跑它只会全量报缺失。
+CI 上不必跑它——`dist/` 不入版本库，新检出的工作区本来就没有这部分产物，跑它只会报一堆缺失。
 
 ## 4. 版本策略
 
@@ -75,23 +84,21 @@ CI 上不跑它——`gen/` 不入版本库，新检出的工作区本来就没�
 | 删除或重命名语义角色 / 色族 / 品牌 | **major** | 删除 `surface.variant` |
 | 修改尺度令牌值 | **major** | `space.4` 从 16 改为 14 |
 | 门禁阈值收紧 | **major** | 三级文字从 3:1 提到 4.5:1 |
-| 文档、报告、展示页 | **patch** | 补文档 |
+| 变更产物形态（增删交付的产物类型） | **major** | 不再生成平台样式产物，改为只交付终端配色 |
+| 文档、报告、参考页 | **patch** | 补文档 |
 
-当前 `2.3.0`。`2.0.0 → 2.1.0` 新增了 `cang`/`zi`/`tan` 三个色族与保留族机制；
-`2.1.0 → 2.2.0` 引入了双极端 `on` 色择优、图表色自动修正、DTCG 输出。
-`2.2.0 → 2.3.0` 生成器由 Python 重写为 Rust（`danqing` 单二进制），运行时依赖降到零；
-产物统一改用 LF 换行，并修正了 `prefers-reduced-motion` 下 `--dq-dur-normal` 未生效的问题。
+当前 `3.0.0`。
 
-## 5. 给应用的升级指引
+## 5. 使用时的注意点
 
-应用不该直接依赖色值，因此升级通常是安全的。但有三类需要注意：
+应用不该直接依赖色值，因此换品牌、换版本通常是安全的。三类仍需注意：
 
-1. **品牌切换后 `on` 色可能变化**：如果应用里有 `color: #fff` 压在主色上，
-   换成檀色品牌后就是白字压赭褐，对比度不达标。**必须**引用 `--dq-primary-on`。
+1. **品牌切换后 `on` 色可能变化**：如果代码里把主色上的文字写死成白色，换成檀色品牌后
+   就是白字压赭褐，对比度不达标。**必须**引用 `sys.primary.on`。
 2. **深色模式的填充可能变化**：暗色下品牌填充级可能外移（如青族 `-1` 级），
-   如果应用里用了主色的「相邻级」做渐变，需要重新确认。
-3. **`text.tertiary` 的 alpha 曾从 0.48 提到 0.55**（为过 3:1 门禁）。
-   若应用里有自定义的「更淡文字」，需要自己重新验证。
+   如果代码里用了主色的「相邻级」做渐变，需要重新确认。
+3. **半透明文字的真实观感**：`text.secondary` / `text.tertiary` 是带 alpha 的墨色，
+   真实对比度取决于它合成到哪种背景上。要自定义更淡的文字，得自己复算那一组合。
 
 ## 6. 如何参与
 
@@ -111,7 +118,7 @@ CI 上不跑它——`gen/` 不入版本库，新检出的工作区本来就没�
 
 ```bash
 danqing build                    # 生成 + 门禁
-git diff --stat gen/             # 看影响面：应新增 11 个原语 + 1 组 scale 不变
+git diff --stat themes/          # 看影响面：应新增 11 个原语，8 套配色随之变化
 ```
 
 评审要点：
@@ -125,8 +132,8 @@ git diff --stat gen/             # 看影响面：应新增 11 个原语 + 1 组
 
 | 反模式 | 后果 | 正确做法 |
 |---|---|---|
-| 在 `gen/` 里手改色值 | 下次生成被覆盖，且不进门禁 | 改 `source.json` |
-| 应用里写 `--dq-cn-qing-700` | 换品牌失效 | 写 `--dq-primary-default` |
+| 手改生成出来的文件（含终端配色） | 下次生成被覆盖，且不进门禁 | 改 `source.json` |
+| 应用里直接引用原语 `cn.qing.700` | 换品牌失效 | 引用 `sys.primary.default` |
 | 把品牌色用作页面背景大面积铺 | 中式审美重留白，且深色下刺眼 | 品牌色面积 < 10% |
 | 复用状态保留族做品牌 | 语义失效 | 新增非保留族 |
 | 只用颜色表示状态 | 色盲用户无法使用 | 附图标或文案 |

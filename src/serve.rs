@@ -12,7 +12,7 @@ use std::path::{Path, PathBuf};
 pub fn run(root: &Path, port: u16) -> Result<(), String> {
     let addr = format!("127.0.0.1:{port}");
     let listener = TcpListener::bind(&addr).map_err(|e| format!("无法监听 {addr}：{e}"))?;
-    println!("丹青展示页：http://{addr}/showcase/index.html");
+    println!("丹青配色参考页：http://{addr}/showcase/");
     println!("按 Ctrl+C 停止。");
 
     for stream in listener.incoming() {
@@ -66,7 +66,16 @@ fn handle(conn: &mut std::net::TcpStream, root: &Path) -> Result<(), String> {
     } else {
         decoded
     };
-    let path = safe_join(root, &rel);
+    let mut path = safe_join(root, &rel);
+
+    // 目录请求回落 index.html：`/showcase/` 与 `/` 都该看到展示页，而不是 404——
+    // 文档与启动提示里给出的就是带斜杠的那个地址。
+    if let Some(p) = &path {
+        if p.is_dir() {
+            let dir_rel = rel.trim_end_matches('/');
+            path = safe_join(root, &format!("{dir_rel}/index.html"));
+        }
+    }
     let _ = peer;
 
     let Some(path) = path else {

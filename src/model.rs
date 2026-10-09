@@ -142,11 +142,6 @@ pub fn obj<'a>(v: &'a Value, key: &str) -> &'a Map<String, Value> {
     v.get(key).and_then(Value::as_object).unwrap_or_else(|| panic!("缺少对象字段 {key}"))
 }
 
-/// 从已经取出来的对象里再取一层子对象（为避免到处写 `["x"].as_object().unwrap()`）。
-pub fn sub<'a>(v: &'a Map<String, Value>, key: &str) -> &'a Map<String, Value> {
-    v.get(key).and_then(Value::as_object).unwrap_or_else(|| panic!("缺少对象字段 {key}"))
-}
-
 pub fn arr<'a>(v: &'a Value, key: &str) -> &'a Vec<Value> {
     v.get(key).and_then(Value::as_array).unwrap_or_else(|| panic!("缺少数组字段 {key}"))
 }

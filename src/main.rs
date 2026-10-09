@@ -10,6 +10,7 @@ mod gate;
 mod model;
 mod pipeline;
 mod serve;
+mod terminal;
 mod util;
 
 use std::path::{Path, PathBuf};
@@ -55,15 +56,17 @@ fn print_help() {
         "丹青 · 中国传统色彩设计系统 —— 令牌构建器 v{}\n\
         \n\
         用法：\n\
-        \x20 danqing build       生成全部端产物 + 跑对比度门禁（失败退出码 1）\n\
+        \x20 danqing build       生成终端配色 + 跑对比度门禁（失败退出码 1）\n\
         \x20 danqing check        只跑门禁，不写盘\n\
         \x20 danqing verify       重新生成并与磁盘上的产物比对，查产物漂移\n\
-        \x20 danqing serve        起一个静态服务预览展示页（默认 127.0.0.1:3788）\n\
+        \x20 danqing serve        起一个静态服务预览配色参考页（默认 127.0.0.1:3788）\n\
         \x20 danqing --version\n\
         \n\
         真源：tokens/source.json（人手维护的唯一文件）+ data/chinese-colors.json\n\
-        产物：gen/** + tokens/danqing.tokens.json + showcase/data.js，共 20 个。\n\
-        三者均禁止手改、均不入版本库；clone / 拉取后跑一次 danqing build 即可重建。",
+        产物：themes/windows-terminal/danqing.schemes.json（入库，clone 即可用）\n\
+        \x20      dist/reports/** + showcase/data.js + tokens/danqing.tokens.json（不入库）\n\
+        产物一律禁止手改，改了会被下次生成覆盖；不入库的那几项在 clone / 拉取后\n\
+        跑一次 danqing build 重建。",
         env!("CARGO_PKG_VERSION")
     );
 }
@@ -134,10 +137,11 @@ fn run(root: &Path, cmd: &str) -> Result<(), String> {
                 }
             }
         }
-        // gen/ 不入版本库，所以「gen/ 整个不存在」是刚 clone 下来的正常状态，
-        // 不是漂移——分开报，否则新人会被一堆 MISSING 误导成「真源坏了」。
-        if !root.join("gen").is_dir() && !outputs.is_empty() {
-            println!("[fail] gen/ 不存在 —— 这是新检出的工作区，请先跑 `danqing build`");
+        // 只有终端配色入库，其余产物（报告、快照、展示页数据）都不入版本库，
+        // 所以「dist/ 整个不存在」是刚 clone 下来的正常状态，不是漂移——
+        // 分开报，否则新人会被一堆 MISSING 误导成「真源坏了」。
+        if !root.join("dist").is_dir() {
+            println!("[fail] dist/ 不存在 —— 这是新检出的工作区，请先跑 `danqing build`");
             std::process::exit(1);
         }
         if drifted + missing > 0 {
@@ -184,28 +188,18 @@ fn read(path: PathBuf) -> Result<String, String> {
 /// 全部输出。（相对路径, 内容）
 fn collect_outputs(p: &Pipeline, checks: &[Check]) -> Vec<(String, String)> {
     let mut out: Vec<(String, String)> = Vec::new();
-    let gen = |sub: &str| format!("gen/{sub}");
 
-    out.push((gen("css/danqing.css"), emit::css::emit_css(p)));
-    out.push((gen("scss/_danqing.scss"), emit::scss::emit_scss(p)));
-    out.push((gen("ts/danqing.ts"), emit::ts::emit_ts(p)));
-    out.push((gen("json/danqing.tokens.json"), emit::dtcg::emit_dtcg(p)));
-    out.push((gen("tailwind/danqing.preset.cjs"), emit::tailwind::emit_tailwind(p)));
-    out.push((gen("swift/DesignTokens.swift"), emit::swift::emit_swift(p)));
-    out.push((gen("compose/DesignTokens.kt"), emit::compose::emit_compose(p)));
-    out.push((gen("flutter/design_tokens.dart"), emit::flutter::emit_flutter(p)));
-    out.push((gen("avalonia/Tokens.axaml"), emit::avalonia::emit_avalonia(p)));
-    for (bid, doc) in emit::avalonia::emit_avalonia_brand(p) {
-        out.push((gen(&format!("avalonia/brands/{bid}.axaml")), doc));
-    }
-    let (colors, dims) = emit::android::emit_android(p);
-    out.push((gen("android/colors.xml"), colors));
-    out.push((gen("android/dimens.xml"), dims));
+    // 唯一入库的产物：终端配色。放 themes/ 而不是不放库的目录，是为了 clone 下来
+    // 就有现成可用的配色，不必先装 Rust 工具链跑一次构建。
+    out.push((
+        "themes/windows-terminal/danqing.schemes.json".to_string(),
+        emit::terminal::emit_windows_terminal(p),
+    ));
 
     let reports = emit::report::emit_reports(p, checks);
-    out.push((gen("reports/ramp-report.md"), reports.ramp));
-    out.push((gen("reports/contrast-report.md"), reports.contrast));
-    out.push((gen("reports/tokens-summary.md"), reports.summary));
+    out.push(("dist/reports/ramp-report.md".to_string(), reports.ramp));
+    out.push(("dist/reports/contrast-report.md".to_string(), reports.contrast));
+    out.push(("dist/reports/tokens-summary.md".to_string(), reports.summary));
 
     out.push((
         "showcase/data.js".to_string(),
@@ -271,7 +265,7 @@ fn snapshot(p: &Pipeline) -> String {
     semantic.insert("dark".into(), p.base().sem("dark").clone());
 
     let doc = json!({
-        "$schema": "danqing/2.2",
+        "$schema": "danqing/3.0",
         "meta": meta,
         "ramp": p.source["ramp"].clone(),
         "families": families,
@@ -282,6 +276,8 @@ fn snapshot(p: &Pipeline) -> String {
         "brandSemantics": brand_semantics,
         "scales": p.source["scales"].clone(),
         "extensions": p.source["extensions"].clone(),
+        // 终端映射是生成配置而非令牌，但它属于真源，快照要「完整」就不能漏它。
+        "terminal": p.source["terminal"].clone(),
         "brandConflicts": conflicts,
     });
 

@@ -1,7 +1,9 @@
-//! 三份报告：`gen/reports/ramp-report.md`、`contrast-report.md`、`tokens-summary.md`
+//! 三份报告：`dist/reports/ramp-report.md`、`contrast-report.md`、`tokens-summary.md`
 //!
 //! 报告是给人看的，也是 CI 里最容易被扫一眼就跳过的一层。它和产物一样是生成物，
 //! 门禁失败时行尾的 ❌ 就是让 CI 日志里那一眼有东西可看。
+//!
+//! 报告不入库：它们是诊断材料，不是交付物。唯一入库的产物是终端配色。
 
 use crate::gate::Check;
 use crate::model::{flat_semantic, s};
@@ -262,29 +264,18 @@ fn tokens_summary(p: &Pipeline) -> String {
     l.push(format!("| 尺度 `scale.*` | {scale_groups} 组 | 间距/圆角/字号/动效/层级/断点 |"));
     l.push(format!("| tier3 扩展 `ext.reading` | {papers} 纸色 + 6 组参数 | 可选引入 |"));
     l.push(String::new());
-    l.push("## 端产物".to_string());
+    l.push("## 产物".to_string());
     l.push(String::new());
-    l.push("| 文件 | 端 | 说明 |".to_string());
-    l.push("|---|---|---|".to_string());
-    for (file, kind, desc) in TARGETS {
-        l.push(format!("| `gen/{file}` | {kind} | {desc} |"));
-    }
-    l.push("| `tokens/danqing.tokens.json` | 全端 | 已解析的完整真源快照 |".to_string());
+    l.push("| 文件 | 端 | 入库 | 说明 |".to_string());
+    l.push("|---|---|---|---|".to_string());
+    l.push(format!(
+        "| `themes/windows-terminal/danqing.schemes.json` | Windows Terminal | 是 | {} 套配色（{} 品牌 × 明暗），可粘进 `settings.json` 的 `schemes` |",
+        p.entries.len() * 2,
+        p.entries.len()
+    ));
+    l.push("| `tokens/danqing.tokens.json` | 全端 | 否 | 已解析的完整真源快照 |".to_string());
+    l.push("| `showcase/data.js` | 配色参考页 | 否 | 展示页数据，页面本身不持有色值 |".to_string());
+    l.push("| `dist/reports/*.md` | — | 否 | 本文件等三份诊断报告 |".to_string());
     l.push(String::new());
     l.join("\n")
 }
-
-const TARGETS: [(&str, &str, &str); 12] = [
-    ("css/danqing.css", "Web", "CSS 自定义属性，含品牌与深色覆盖"),
-    ("scss/_danqing.scss", "Sass", "变量 + 嵌套 map + `dq-color()` 函数"),
-    ("ts/danqing.ts", "TypeScript", "字面量常量 + 类型导出"),
-    ("json/danqing.tokens.json", "DTCG", "W3C DTCG 格式，可被 Style Dictionary / Figma Tokens 消费"),
-    ("tailwind/danqing.preset.cjs", "Tailwind", "`theme.extend` 预设"),
-    ("avalonia/Tokens.axaml", "Avalonia", "令牌基座：原语 + 品牌无关语义 + 阅读扩展 + 尺度"),
-    ("avalonia/brands/*.axaml", "Avalonia", "品牌 overlay（一支文件一个品牌，含浅/深），与基座合并使用"),
-    ("swift/DesignTokens.swift", "SwiftUI", "枚举 + `Color(hex:)`"),
-    ("compose/DesignTokens.kt", "Compose", "object + dp/sp"),
-    ("flutter/design_tokens.dart", "Flutter", "常量类"),
-    ("android/colors.xml", "Android", "浅/深双份 `<color>`"),
-    ("android/dimens.xml", "Android", "dp/sp 尺度"),
-];

@@ -2,14 +2,15 @@
 /target/
 **/*.rs.bk
 
-# 生成物：下面这些全部由 `danqing build` 从真源确定性重建，不入库。
-# 入库的代价是——真源一行改动会被十几个产物的大规模 diff 淹没，
-# review 时反而看不清改了什么。clone / 拉取后跑一次 `danqing build` 即可。
-/gen/
+# 诊断产物：色阶报告、对比度报告与令牌总览，由 `danqing build` 重建，不入库。
+/dist/
 
 # 已解析快照（含全部原语与语义）与展示页数据，同样是产物，同样不入库
 /tokens/danqing.tokens.json
 /showcase/data.js
+
+# Agent 工作材料（设计稿 / 计划 / 验收转录），仅本机可见
+/.agents/
 
 # 编辑器 / 系统
 .vscode/

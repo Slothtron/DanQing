@@ -7,7 +7,7 @@
 每一个原语色值都能回答「它为什么是这个颜色」。锚点级直接等于某条传统色原值，其余级是该色在感知空间中的明度延伸。
 不存在「调着调着觉得好看就定下来」的颜色。
 
-> 检验方式：`gen/reports/ramp-report.md` 里每一级都列出了最近的传统色名与原始色值。
+> 检验方式：`dist/reports/ramp-report.md` 里每一级都列出了最近的传统色名与原始色值。
 
 ### 原则二：语义先于颜色
 
@@ -33,8 +33,8 @@
 
 ### 原则六：一个真源，机器生成
 
-`tokens/source.json` 是唯一人手维护的文件。所有端产物由脚本生成。
-不允许任何人在 `gen/` 里手改，也不允许任何端有「自己那份色值」。
+`tokens/source.json` 是唯一人手维护的文件，产物由生成器写出。
+不允许任何人手改产物（终端配色同样如此，改了下一次构建就覆盖），也不允许任何端有「自己那份色值」。
 
 ## 2. 命名规范
 
@@ -59,13 +59,16 @@ tier2  sys.{role}.{variant}        例：sys.text.primary
 tier3  ext.{domain}.{name}         例：ext.reading.bg
 ```
 
-CSS 变量统一加前缀 `--dq-`，点号转连字符：
+令牌前缀是 `dq`（真源里的 `meta.prefix`）。各端拿它作为自己那套变量的命名空间，点号转连字符：
 
 ```
-sys.text.primary   →  --dq-text-primary
-sys.primary.default →  --dq-primary-default
-cn.qing.700        →  --dq-cn-qing-700
+sys.text.primary    →  dq-text-primary
+sys.primary.default →  dq-primary-default
+cn.qing.700         →  dq-cn-qing-700
 ```
+
+前缀不随品牌或主题变化。终端配色是唯一不走这层命名的产物——它按 Windows Terminal
+自己的字段名输出，见 [`06-terminal-theming.md`](./06-terminal-theming.md)。
 
 级数使用 50–950 的百位制（Tailwind 惯例），便于跨系统交流；`950` 用于最深的强调底。
 
@@ -85,10 +88,10 @@ cn.qing.700        →  --dq-cn-qing-700
 | 用颜色承载唯一信息 | 色盲用户无法区分 | 状态色必须同时有图标或文案（WCAG 1.4.1） |
 | 用「绛」表示强调、「朱」表示危险 | 两者同色相，极易混淆 | 强调用 `紫`（accent），危险用 `绛`（danger） |
 | 用纯黑 `#000` 作正文 | 与暖白背景对比过硬，长看刺眼 | 用 `墨-900` `#1E2732` |
-| 用纯白 `#FFF` 作浅色页面底 | 与卡片无法分层，且眩光强 | 页面底用 `素-100` `#F4F1E9`，卡片用 `#FFFFFF` |
+| 用纯白 `#FFF` 作浅色页面底 | 与卡片无法分层，且眩光强 | 页面底用 `素-100` `#E4E1D8`，卡片用 `#FFFFFF` |
 | 大面积使用高饱和主色 | 中式审美重「留白」与「克制」 | 主色用于操作与选中，面积占比建议 < 10% |
 | 同一个界面出现两种强调色 | 强调失去意义 | 一次只用一个强调色 |
-| 直接改 `gen/` 里的文件 | 下次生成即被覆盖 | 改 `tokens/source.json` 后重跑 `danqing build` |
+| 直接改生成出来的文件（终端配色也一样） | 下次生成即被覆盖 | 改 `tokens/source.json` 后重跑 `danqing build` |
 
 ## 4. 色彩面积与节奏（非强制，但强烈建议）
 

@@ -6,8 +6,8 @@
     "tagline": "中国传统色彩设计系统",
     "id": "danqing",
     "prefix": "dq",
-    "version": "2.3.0",
-    "date": "2026-10-08",
+    "version": "3.0.0",
+    "date": "2026-10-09",
     "license": "MIT",
     "scope": "application-agnostic",
     "palette": {
@@ -220,6 +220,44 @@
         "grid": "rgba(@inkRgb,0.12)", "axis": "rgba(@inkRgb,0.45)", "label": "rgba(@inkRgb,0.72)",
         "positive": "@lv.text", "negative": "@jiang.text", "neutral": "rgba(@inkRgb,0.45)"
       }
+    }
+  },
+
+  "terminal": {
+    "note": "Windows Terminal 配色。`chrome` 按品牌 × 模式从语义层取值；`palette` 的 16 个 ANSI 槽位每个对一族，基色与亮色取同族两档，故色相盘不随品牌变动。`backgroundSideNeutrals` 是与底色同侧、用于表达底色本身的中性槽位，不参与同底对比门禁。",
+    "schemePrefix": "丹青",
+    "modes": { "light": "素", "dark": "墨" },
+    "chrome": {
+      "background": "sys.bg.canvas",
+      "foreground": "sys.text.primary",
+      "cursorColor": "sys.primary.default",
+      "selectionBackground": "sys.primary.subtle"
+    },
+    "palette": {
+      "light": {
+        "black": "@mo.900", "brightBlack": "@mo.600",
+        "red": "@zhu.700", "brightRed": "@zhu.600",
+        "green": "@lv.700", "brightGreen": "@lv.600",
+        "yellow": "@xiang.700", "brightYellow": "@xiang.600",
+        "blue": "@qing.700", "brightBlue": "@qing.600",
+        "purple": "@zi.700", "brightPurple": "@zi.600",
+        "cyan": "@cang.700", "brightCyan": "@cang.600",
+        "white": "@su.300", "brightWhite": "@su.50"
+      },
+      "dark": {
+        "black": "@mo.950", "brightBlack": "@mo.500",
+        "red": "@zhu.400", "brightRed": "@zhu.200",
+        "green": "@lv.400", "brightGreen": "@lv.200",
+        "yellow": "@xiang.400", "brightYellow": "@xiang.200",
+        "blue": "@qing.400", "brightBlue": "@qing.200",
+        "purple": "@zi.400", "brightPurple": "@zi.200",
+        "cyan": "@cang.400", "brightCyan": "@cang.200",
+        "white": "@su.200", "brightWhite": "@su.50"
+      }
+    },
+    "backgroundSideNeutrals": {
+      "light": ["white", "brightWhite"],
+      "dark": ["black"]
     }
   },
 
